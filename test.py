@@ -1,5 +1,5 @@
 # Program to display the Fibonacci sequence up to n-th term
-
+a = "print(fib(n)): "
 nterms = int(input("How many terms? "))
 
 # first two terms
