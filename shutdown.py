@@ -23,16 +23,19 @@ def PrintMenu():
     print("4. Huỷ")
     print("Nhập lựa chọn: ", end = "")
     mode = input()
-    if mode == "1":
-        Restart()
-    elif mode == "2":
-        Shutdown()
-    elif mode == "3":
-        exit()
-    elif mode == "4":
-        os.system("shutdown /a")
-        print("Done. Huỷ thành công.")
-    else:
-        print("Sai syntax gòi anh chai :clown:")
+    while (mode != "1" and mode != "2" and mode != "3" and mode != "4"):
+        mode = input("Nhập lại lựa chọn: ")
+        if mode == "1":
+            Restart()
+        elif mode == "2":
+            Shutdown()
+        elif mode == "3":
+            exit()
+        elif mode == "4":
+            os.system("shutdown /a")
+            print("Done. Huỷ thành công.")
+        else:
+            print("Sai syntax gòi anh chai :clown:")
+    
 
 PrintMenu()
