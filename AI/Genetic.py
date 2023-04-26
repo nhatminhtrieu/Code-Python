@@ -17,8 +17,8 @@ MAX_DEPTH = 1000
 
 def GeneratePopulation(data, BaseState):
     State = [0] * data.Size()
-    #BranchAndBound(data, State)
-    #BaseState.append(State.copy())
+    BranchAndBound(data, State)
+    BaseState.append(State.copy())
     
     for i in range(data.Size()):
         State[i] = 1

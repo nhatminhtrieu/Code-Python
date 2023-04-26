@@ -15,7 +15,7 @@ def main():
         print("     Type '-bf' for Brute Force")
         print("     Type '-bb' for Branch and Bound")
         print("     Type '-lb' for Local Beam Search")
-        print("     Type '-ge' for Genetic Algorithm")  
+        print("     Type '-ge' for Genetic Algorithm")
         exit()
 
     # Assign algorithm
