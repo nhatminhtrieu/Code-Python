@@ -32,8 +32,7 @@ def main():
     else:
         print("Invalid argument")
         exit()
-
-
+        
     # Running algorithm
     data = DATA()
     FileParameter = 0

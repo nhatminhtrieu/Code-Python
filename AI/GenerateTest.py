@@ -2,7 +2,7 @@ import random
 
 # DEFINE PARAMETER HERE
 CAPACITY = 5000
-NUM_ITEM = [5, 10, 20, 30, 40] # Use this for BF
+NUM_ITEM = [10, 20, 25, 30, 40] # Use this for BF
 #NUM_ITEM = [50, 100, 200, 500, 1000] # Use this for the others
 NUM_CLASS = 5
 
@@ -18,9 +18,9 @@ for FileParameter in range(0, len(NUM_ITEM)):
 
     for i in range(0, num_item):
         if (i != num_item - 1):
-            file.write(str(random.randint(1, CAPACITY / 2)) + ", ")
+            file.write(str(random.uniform(1, CAPACITY / 2)) + ", ")
         else:
-            file.write(str(random.randint(1, CAPACITY / 2)) + "\n")
+            file.write(str(random.uniform(1, CAPACITY / 2)) + "\n")
 
     for i in range(0, num_item):
         if (i != num_item - 1):
