@@ -2,8 +2,8 @@ import random
 
 # DEFINE PARAMETER HERE
 CAPACITY = 5000
-NUM_ITEM = [10, 20, 25, 30, 40] # Use this for BF
-#NUM_ITEM = [50, 100, 200, 500, 1000] # Use this for the others
+#NUM_ITEM = [10, 20, 25, 30, 40] # Use this for BF
+NUM_ITEM = [50, 100, 200, 500, 1000] # Use this for the others
 NUM_CLASS = 5
 
 # RANDOM HERE
