@@ -35,7 +35,5 @@ def balance_chemical_equation(lhs, rhs):
     # ứng với mỗi phân tử trong lhs, rhs xác định hệ số tương ứng
     variables = sp.symbols(' '.join(elementList))
     # v1 = [1, 3, 3, 0]
-    v1 = np.array()
-    print(v1)
 
 print(balance_chemical_equation([Al_OH3, H2_SO4], [Al2_SO43, H2O]))
