@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[a4paper,top=3cm,bottom=2.5cm,left=2.5cm,
+            right=2cm,marginparwidth=1.75cm,
+            headheight=5pt]{geometry}
+\usepackage[T5]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[document]{ragged2e}
+\usepackage[vietnamese]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{floatrow}
+\usepackage[nottoc]{tocbibind}
+\usepackage{mdframed}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tgbonum}
+\usepackage{type1cm}
+\usepackage{indentfirst}
+\usepackage{lettrine}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{lastpage}
+\usepackage{url}
+\addto\captionsenglish{
+  \renewcommand{\contentsname}{MỤC LỤC}%
+  \renewcommand{\listfigurename}{Danh sách ảnh}%
+  \renewcommand{\listtablename}{Danh sách bảng}%
+  \renewcommand{\figurename}{Hình}
+  \renewcommand{\tablename}{Bảng}
+}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Toán ứng dụng và thống kê}
+\lhead{\color{cyan}Project 1: Color Compression}
+\lfoot{Trang \thepage /\pageref{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\parindent}{5pt}
+\setlength{\parskip}{1cm}
+\renewcommand{\baselinestretch}{1.5}
+\newmdenv[linecolor=black,skipabove=\topsep,skipbelow=\topsep,
+leftmargin=2.5cm,rightmargin=2.5cm,
+innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
+\usepackage{multicol}
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage{apacite}
+\usepackage{tikz}
+\graphicspath{{Figures/}} 
+\usepackage[square, numbers, comma, sort&compress]{natbib}  
+\usepackage{lipsum}
+\usetikzlibrary{calc}
+\setlength{\columnseprule}{2pt}
+\def\columnseprulecolor{\color{black}}
+\def\maru#1{\textcircled{\scriptsize#1}}
+
+\begin{document}
+% Bìa trang
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay,inner sep=0,outer sep=0]
+     \draw[blue!70!black,line width=4pt] ([xshift=-1.5cm,yshift=-2cm]current page.north east) coordinate (A)--([xshift=2cm,yshift=-2cm]current page.north west) coordinate(B)--([xshift=2cm,yshift=2cm]current page.south west) coordinate (C)--([xshift=-1.5cm,yshift=2cm]current page.south east) coordinate(D)--cycle;
+
+     \draw ([yshift=0.5cm,xshift=-0.5cm]A)-- ([yshift=0.5cm,xshift=0.5cm]B)--
+     ([yshift=-0.5cm,xshift=0.5cm]B) --([yshift=-0.5cm,xshift=-0.5cm]B)--([yshift=0.5cm,xshift=-0.5cm]C)--([yshift=0.5cm,xshift=0.5cm]C)--([yshift=-0.5cm,xshift=0.5cm]C)-- ([yshift=-0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=0.5cm]D)--([yshift=-0.5cm,xshift=0.5cm]A)--([yshift=-0.5cm,xshift=-0.5cm]A)--([yshift=0.5cm,xshift=-0.5cm]A);
+
+
+     \draw ([yshift=-0.3cm,xshift=0.3cm]A)-- ([yshift=-0.3cm,xshift=-0.3cm]B)--
+     ([yshift=0.3cm,xshift=-0.3cm]B) --([yshift=0.3cm,xshift=0.3cm]B)--([yshift=-0.3cm,xshift=0.3cm]C)--([yshift=-0.3cm,xshift=-0.3cm]C)--([yshift=0.3cm,xshift=-0.3cm]C)-- ([yshift=0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=-0.3cm]D)--([yshift=0.3cm,xshift=-0.3cm]A)--([yshift=0.3cm,xshift=0.3cm]A)--([yshift=-0.3cm,xshift=0.3cm]A);
+
+   \end{tikzpicture}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\center
+
+\textsc{\Large TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN}\\[0.5cm]
+\textsc{\Large KHOA CÔNG NGHỆ THÔNG TIN}\\[1cm]
+\includegraphics[width=0.3\textwidth]{logo/KHTN.jpg}\\[1cm]
+
+\HRule \\[0.4cm]
+{\huge \bfseries ĐỒ ÁN 1: COLOR COMPRESSION} \\[0.4cm]
+{\large TOÁN ỨNG DỤNG VÀ THỐNG KÊ}\\[0.1cm]
+\HRule \\[1.5cm]
+
+\centerline{\Large{\textbf{Triệu Nhật Minh — 21127112}}}
+\vspace{9cm}
+\centerline{\today}
+
+
+\vfill % Wipe blank space of the page.
+\end{titlepage}
+
+% Mục lục tự động
+\setlength{\parskip}{.5em}
+\tableofcontents
+\newpage
+
+% Table of Figures & Tables
+\setlength{\parskip}{.5em}
+%\listoffigures
+%\listoftables
+\newpage
+
+%
+\section{Giới thiệu}
+
+
+
+
+\end{document}
