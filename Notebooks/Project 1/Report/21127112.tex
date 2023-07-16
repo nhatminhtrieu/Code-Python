@@ -117,6 +117,18 @@ innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
 \subsection{Nhóm hàm chính}
 \subsubsection{get\_labels}
 \subsubsection{initialize\_centroids}
+\textbf{Input:} Mảng 1 chiều các điểm ảnh (img\_1d), số cụm (k\_cluster) và kiểu khởi tạo (init\_centroids) \\
+\textbf{Output:} Mảng các centroids
+
+\paragraph*{Mô tả:} Đầu tiên, ta cần đếm số màu phân biệt trong bức ảnh (sử dụng numpy.unique) và so sánh chúng với số màu cần ''nén''. Sử dụng hàm min để lấy giá trị nhỏ nhất giữa 2 giá trị để đảm bảo số màu cần ''nén'' không vượt quá số màu phân biệt trong bức ảnh. Sau đó, tuỳ thuộc vào kiểu khởi tạo centroids người dùng nhập vào (random hoặc in\_pixels) thì hàm sẽ khởi tạo các centroids theo kiểu tương ứng:
+\begin{description}
+  \item [random:] Sử dụng numpy.random.randint để tạo ra một mảng các số nguyên ngẫu nhiên trong khoảng từ 0 đến 255 với số sample trả về bằng số cụm, mỗi cụm có số kênh màu giá trị (ở đây số kênh màu là img\_1d.shape[1] do số kênh màu trong đa số các trường hợp test là 3 (tương ứng với hệ màu RGB), tuy nhiên có trường hợp số kênh màu trả về là 4. Do đó để đảm bảo tính tổng quát, ta sẽ sử dụng img\_1d.shape[1]), đồng thời ép kiểu giá trị trả về là số nguyên không âm 8bit để đảm bảo tính chính xác của giá trị trả về.
+  \item [in\_pixels:] Sử dụng numpy.random.choice đồng thời tận dụng mảng unique\_img\_1d lưu trữ các màu phân biệt trong bức ảnh để tạo ra mảng các màu ngẫu nhiên với số kết quả trả về là số cụm. Sau đó lấy ra phần tử tương ứng trong mảng unique\_img\_1d và gán chúng làm giá trị cho phần tử trong mảng centroids. Mỗi cụm có số kênh màu bằng với số kênh màu của phần tử trong mảng unique\_img\_1d. Trong lúc random xuất hiện một tham số \textit{replace=False} nhằm đảm bảo các màu được chọn không có sự trùng lặp.
+\end{description}
+Nếu giá trị của tham số init\_centroids không phải là ''random'' hoặc ''in\_pixels'' thì hàm sẽ báo lỗi. \\
+
+Và dù bằng bất kì cách random hợp lệ nào thì mảng centroid trả về đều được chuyển thành ndarray 2 chiều với số hàng (rows) bằng số cụm, số cột (cols) bằng số kênh màu của phần tử trong mảng img\_1d (img\_1d.shape[1]).
+
 \subsubsection{update\_centroids}
 \subsubsection{kmeans}
 
@@ -125,6 +137,14 @@ innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
 \subsubsection{convert\_1d\_array}
 \subsubsection{convert\_2d\_array}
 \subsubsection{show\_image}
+\textbf{Input:} Danh sách các ảnh được lưu từ phương thức Image.fromarray của thư viện PIL \\
+\textbf{Output:} Không có
+
+\paragraph*{Mô tả:}
+Để có thể hiển thị nhiều ảnh trên một figure, ở đây để đối chiếu ảnh trước và sau xử lý, ta sử dụng phương thức subplot. Đầu tiên, ta sẽ tạo ra một figure với số hàng bằng 1, số cột bằng số ảnh được truyền vào. Sau đó, ta sẽ duyệt qua từng ảnh trong danh sách ảnh được truyền vào và hiển thị chúng lên figure với vị trí tương ứng và hiển thị figure ra màn hình.
+
+Dòng code \textit{plt.figure(figsize=(20,10))} có tác dụng tạo figure hiển thị ra màn hình với kích thước 20x10 inches thay vì thông số mặc định 6.4x4.8 nhằm đảm bảo tính thẩm mỹ, không có tác động đến kết quả xử lý.
+
 \subsubsection{write\_image}
 \subsubsection{execute}
 
@@ -139,6 +159,9 @@ innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
 \section{Tài liệu tham khảo}
 \begin{itemize}
     \item \href{https://youtu.be/uLs-EYUpGAw?t=231}{How to Code K-Means in Python (No Sklearn)}
+    \item \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.randint.html}{numpy.random.randint}
+    \item \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html}{numpy.random.choice}
+    \item \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html}{matplotlib.pyplot.figure}
 \end{itemize}
 
 \end{document}
