@@ -237,9 +237,6 @@ Dòng code \textit{plt.figure(figsize=(20,10))} có tác dụng tạo figure hi�
 \paragraph*{Mô tả:}
 Hàm sẽ kiểm tra định dạng cần lưu là hợp lệ hay không, nếu không hợp lệ sẽ báo lỗi. Nếu hợp lệ, hàm sẽ sử dụng hàm \textit{Pillow.imsave} với định dạng \textit{format=ext}. Do ta không yêu cầu người dùng nhập tên ảnh sau xử lý cũng như phòng trường hợp ảnh đầu vào có cùng định dạng với ảnh sau xử lý, ta sẽ đặt tên ảnh sau xử lý là \textit{output.png} hoặc \textit{output.pdf} thay vi dùng tên ảnh gốc.
 
-\paragraph*{Lưu ý:}
-Trong một số thử nghiệm, ảnh ban đầu có kênh màu RGBA và cần lưu ở định dạng pdf. Định dạng pdf không hỗ trợ kênh màu RGBA nên ta cần chuyển đổi ảnh về kênh màu RGB trước khi lưu. Ta kiểm tra hệ màu được sử dụng phương thức \textit{mode} và nếu hệ màu là RGBA, ta sẽ chuyển đổi hệ màu về RGB bằng phương thức \textit{convert}.
-
 \subsubsection{execute}
 \textbf{Input:} Không có \\
 \textbf{Output:} Không có
