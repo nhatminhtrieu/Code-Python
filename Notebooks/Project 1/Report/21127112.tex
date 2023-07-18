@@ -222,7 +222,7 @@ Ta cần ''duỗi'' mảng 2 chiều về mảng 1 chiều và quy định kích
 Sau khi đã thực hiện xong thuật toán K-Means, ta cần chuyển mảng 1 chiều các điểm ảnh về dạng mảng 2 chiều để có thể hiển thị được bức ảnh đã xử lý. Để có được mảng 1 chiều này, ta sẽ duyệt qua từng phần tử trong mảng labels và gán giá trị của phần tử tương ứng trong mảng centroids vào mảng 1 chiều mới. Gọi là mảng 1 chiều nhưng như đã nói việc thay đổi góc nhìn từ mục \ref{view}. Thực chất, mảng này có 2 chiều với số hàng bằng với số phần tử trong mảng labels và số cột bằng với số kênh màu có thể truyền vào qua tham số \textit{centroids.shape[1]} hoặc \textit{img\_2d.shape[2]}. Cuối cùng, ta sẽ reshape mảng 1 chiều mới về dạng mảng 2 chiều. Lúc này, công dụng của việc tạo mảng 2 chiều lưu trữ các điểm ảnh của ảnh ban đầu được phát huy khi ta có thể lấy kích thước của ảnh ban đầu và reshape dễ dàng.
 
 \subsubsection{show\_image}
-\textbf{Input:} Danh sách các ảnh được lưu (img\_list) \\
+\textbf{Input:} Danh sách 2 ảnh được lưu dưới dạng mảng 2 chiều các điểm ảnh (img\_list) \\
 \textbf{Output:} Không có
 
 \paragraph*{Mô tả:}
@@ -235,7 +235,7 @@ Dòng code \textit{plt.figure(figsize=(20,10))} có tác dụng tạo figure hi�
 \textbf{Output:} Không có
 
 \paragraph*{Mô tả:}
-Hàm sẽ kiểm tra định dạng cần lưu là hợp lệ hay không, nếu không hợp lệ sẽ báo lỗi. Nếu hợp lệ, hàm sẽ tạo ra một đối tượng Image từ mảng 2 chiều chứa các giá trị màu của ảnh sau khi xử lý, sau đó lưu đối tượng Image này với định dạng cần lưu thông qua phương thức \textit{save}. Do ta không yêu cầu người dùng nhập tên ảnh sau xử lý cũng như phòng trường hợp ảnh đầu vào có cùng định dạng với ảnh sau xử lý, ta sẽ đặt tên ảnh sau xử lý là \textit{output.png} hoặc \textit{output.pdf} thay vi dùng tên ảnh gốc.
+Hàm sẽ kiểm tra định dạng cần lưu là hợp lệ hay không, nếu không hợp lệ sẽ báo lỗi. Nếu hợp lệ, hàm sẽ sử dụng hàm \textit{Pillow.imsave} với định dạng \textit{format=ext}. Do ta không yêu cầu người dùng nhập tên ảnh sau xử lý cũng như phòng trường hợp ảnh đầu vào có cùng định dạng với ảnh sau xử lý, ta sẽ đặt tên ảnh sau xử lý là \textit{output.png} hoặc \textit{output.pdf} thay vi dùng tên ảnh gốc.
 
 \paragraph*{Lưu ý:}
 Trong một số thử nghiệm, ảnh ban đầu có kênh màu RGBA và cần lưu ở định dạng pdf. Định dạng pdf không hỗ trợ kênh màu RGBA nên ta cần chuyển đổi ảnh về kênh màu RGB trước khi lưu. Ta kiểm tra hệ màu được sử dụng phương thức \textit{mode} và nếu hệ màu là RGBA, ta sẽ chuyển đổi hệ màu về RGB bằng phương thức \textit{convert}.
