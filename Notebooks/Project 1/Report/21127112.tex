@@ -267,6 +267,9 @@ Các phép đo, xử lý được thực hiện trên máy tính có cấu hình
 \end{itemize}
 Phép đo thời gian chạy sử dụng module time của Python và làm tròn đến 3 chữ số thập phân.
 \subsubsection{k = 3, 5, 7}
+k = 3: Thời gian chạy: 1.934s (random), 1.536s (in\_pixels) \\
+k = 5: Thời gian chạy: 2.966s (random), 3.092s (in\_pixels)\\
+k = 7: Thời gian chạy: 8.898s (random), 7.298s (in\_pixels)
 \begin{figure}[h!]
   \begin{subfigure}{.5\textwidth}
     \centering
@@ -320,7 +323,7 @@ Phép đo thời gian chạy sử dụng module time của Python và làm tròn
 
 \pagebreak
 \subsubsection{k = 100, 256}
-
+k = 100: Thời gian chạy: 139.685s (random), 143.472s (in\_pixels) \\ 
 \begin{figure}[ht!]
   \begin{subfigure}{.5\textwidth}
     \centering
@@ -337,7 +340,7 @@ Phép đo thời gian chạy sử dụng module time của Python và làm tròn
   \caption{k = 100}
   \label{fig:fig3}
 \end{figure}
-
+k = 256: Thời gian chạy: 354.843s (random), 375.233s (in\_pixels)
 \begin{figure}[ht!]
   \begin{subfigure}{.5\textwidth}
     \centering
@@ -358,32 +361,36 @@ Phép đo thời gian chạy sử dụng module time của Python và làm tròn
 \pagebreak
 \newpage
 \subsection{Nhận xét}
-\subsubsection{k = 3}
-\begin{itemize}
-  \item Thời gian chạy: 1.934s (random), 1.536s (in\_pixels)
-  \item Định dạng đầu ra: PNG
-\end{itemize}
-\subsubsection{k = 5}
-\begin{itemize}
-  \item Thời gian chạy: 2.966s (random), 3.092s (in\_pixels)
-  \item Định dạng đầu ra: PNG
-\end{itemize}
-\subsubsection{k = 7}
-\begin{itemize}
-  \item Thời gian chạy: 8.898s (random), 7.298s (in\_pixels)
-  \item Định dạng đầu ra: PNG
-\end{itemize}
-\subsubsection{k = 100}
-\begin{itemize}
-  \item Thời gian chạy: 139.685s (random), 143.472s (in\_pixels)
-  \item Định dạng đầu ra: PNG
-\end{itemize}
-\subsubsection{k = 256}
-\begin{itemize}
-  \item Thời gian chạy: 354.843s (random), 375.233s (in\_pixels)
-  \item Định dạng đầu ra: PNG
-\end{itemize}
+\subsubsection{Về ảnh đầu ra}
+Trên lý thuyết, mắt con người có thể nhìn được hơn 10 triệu màu sắc khác nhau. Tuy nhiên, như kết quả thực nghiệm trên, khi k = 256, hình ảnh đã được phân cụm rất tốt, không có sự khác biệt đáng kể so với k = 100, trái lại thời gian còn tăng lên gấp đôi. \par
 
+Quay trở lại 3 giá trị k nhỏ (3, 5, 7), ta thấy bức ảnh với k = 3 gần như trở thành bức ảnh đen trắng, không có sự phân đoạn rõ ràng. Khi k tiến lên bằng 5, một số chi tiết rêu xanh có thể nhìn rõ bằng mắt thường hơn. Và khi k = 7, ta có thể nhìn thấy chi tiết rêu xanh lá trên thân cây. \par
+
+Với các giá trị k lớn (100, 256), do các màu sắc không có sự khác nhau đáng kể, nói nôm na là ''giống nhau'' nên sau khi xử lý bằng thuật toán K-Means, ta có thể nhìn các màu sắc gần như giống với bức ảnh gốc. Tại k = 100 ta có thể nhìn thấy các chi tiết rêu xanh lá không ''tươi'' bằng bức ảnh gốc, sự khác biệt này cải thiện rất nhiều khi tăng k = 256. \par
+
+\begin{figure}[ht!]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{image/com_in_100.png}
+    \caption{So sánh giữa bức ảnh gốc và bức ảnh được xử lý với k = 100 (in\_pixels)}
+    \label{fig:sfig11}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{image/com_in_256.png}
+    \caption{So sánh giữa bức ảnh gốc và bức ảnh được xử lý với k = 256 (in\_pixels)}
+    \label{fig:sfig12}
+  \end{subfigure}
+  \label{fig:fig5}
+\end{figure}
+
+\newpage 
+Bằng mẳt thường ta không thể phân biệt sự khác nhau giữa các bức ảnh xử lý bởi 2 kiểu khởi tạo centroid. Trong 3/5 trường hợp, thời gian chạy của kiểu khởi tạo in\_pixels lâu hơn đáng kể (khoảng 10\%) so với random. Điều này có thể giải thích bằng việc khi khởi tạo centroid theo kiểu in\_pixels, ta phải duyệt qua toàn bộ mảng unique\_img\_1d để lấy ra các điểm ảnh, trong khi đó, khi khởi tạo theo kiểu random, ta chỉ cần sinh ngẫu nhiên các giá trị trong khoảng [0, 255]. \par
+
+\subsubsection{Về tài nguyên sử dụng}
+Với các giá trị k nhỏ, hiệu năng CPU cần để tính toán là không đáng kể và kết quả trả về rất nhanh. Tuy nhiên trong trường hợp k = 256 với 100 vòng lặp, máy tính sử dụng khoảng 3.5GB RAM và 8.5\% CPU trong suốt quá trình chạy. \par
+
+\centerline{\includegraphics[width=0.2\textwidth]{image/performance.png}}
 \newpage
 \section{Tài liệu tham khảo}
 \begin{itemize}

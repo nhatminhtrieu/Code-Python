@@ -1,34 +1,31 @@
 \babel@toc {vietnamese}{}\relax 
-\contentsline {section}{\numberline {1}Hướng dẫn sử dụng}{3}{section.1}%
-\contentsline {section}{\numberline {2}Ý tưởng thực hiện}{3}{section.2}%
-\contentsline {section}{\numberline {3}Mô tả}{4}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Nhóm hàm chính}{4}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}get\_labels}{4}{subsubsection.3.1.1}%
-\contentsline {paragraph}{Mô tả:}{4}{subsubsection.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.2}initialize\_centroids}{5}{subsubsection.3.1.2}%
-\contentsline {subsubsection}{\numberline {3.1.3}update\_centroids}{6}{subsubsection.3.1.3}%
-\contentsline {paragraph}{Mô tả:}{6}{subsubsection.3.1.3}%
-\contentsline {subsubsection}{\numberline {3.1.4}is\_converged}{6}{subsubsection.3.1.4}%
-\contentsline {paragraph}{Mô tả:}{6}{subsubsection.3.1.4}%
-\contentsline {subsubsection}{\numberline {3.1.5}kmeans}{6}{subsubsection.3.1.5}%
-\contentsline {paragraph}{Mô tả:}{6}{subsubsection.3.1.5}%
-\contentsline {subsection}{\numberline {3.2}Nhóm hàm bổ trợ}{7}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}convert\_1d\_array}{7}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}convert\_2d\_array}{7}{subsubsection.3.2.2}%
-\contentsline {paragraph}{Mô tả:}{7}{subsubsection.3.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.3}show\_image}{7}{subsubsection.3.2.3}%
-\contentsline {subsubsection}{\numberline {3.2.4}write\_image}{8}{subsubsection.3.2.4}%
-\contentsline {subsubsection}{\numberline {3.2.5}execute}{8}{subsubsection.3.2.5}%
-\contentsline {paragraph}{Mô tả:}{8}{subsubsection.3.2.5}%
-\contentsline {section}{\numberline {4}Hình ảnh đầu ra}{9}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Hình ảnh gốc}{9}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Hình ảnh lúc sau (Số lần lặp = 100)}{9}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}k = 3, 5, 7}{9}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}k = 100, 256}{10}{subsubsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.3}Nhận xét}{11}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {4.3.1}k = 3}{11}{subsubsection.4.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.2}k = 5}{11}{subsubsection.4.3.2}%
-\contentsline {subsubsection}{\numberline {4.3.3}k = 7}{11}{subsubsection.4.3.3}%
-\contentsline {subsubsection}{\numberline {4.3.4}k = 100}{12}{subsubsection.4.3.4}%
-\contentsline {subsubsection}{\numberline {4.3.5}k = 256}{12}{subsubsection.4.3.5}%
-\contentsline {section}{\numberline {5}Tài liệu tham khảo}{13}{section.5}%
+\contentsline {section}{\numberline {1}Hướng dẫn sử dụng}{2}{section.1}%
+\contentsline {section}{\numberline {2}Ý tưởng thực hiện}{2}{section.2}%
+\contentsline {section}{\numberline {3}Mô tả}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Nhóm hàm chính}{3}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}get\_labels}{3}{subsubsection.3.1.1}%
+\contentsline {paragraph}{Mô tả:}{3}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}initialize\_centroids}{4}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}update\_centroids}{5}{subsubsection.3.1.3}%
+\contentsline {paragraph}{Mô tả:}{5}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}is\_converged}{5}{subsubsection.3.1.4}%
+\contentsline {paragraph}{Mô tả:}{5}{subsubsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.5}kmeans}{5}{subsubsection.3.1.5}%
+\contentsline {paragraph}{Mô tả:}{5}{subsubsection.3.1.5}%
+\contentsline {subsection}{\numberline {3.2}Nhóm hàm bổ trợ}{6}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}convert\_1d\_array}{6}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}convert\_2d\_array}{6}{subsubsection.3.2.2}%
+\contentsline {paragraph}{Mô tả:}{6}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}show\_image}{6}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}write\_image}{7}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}execute}{7}{subsubsection.3.2.5}%
+\contentsline {paragraph}{Mô tả:}{7}{subsubsection.3.2.5}%
+\contentsline {section}{\numberline {4}Hình ảnh đầu ra}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Hình ảnh gốc}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Hình ảnh lúc sau (Số lần lặp = 100)}{8}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}k = 3, 5, 7}{8}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}k = 100, 256}{9}{subsubsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.3}Nhận xét}{10}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Về ảnh đầu ra}{10}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Về tài nguyên sử dụng}{11}{subsubsection.4.3.2}%
+\contentsline {section}{\numberline {5}Tài liệu tham khảo}{12}{section.5}%
