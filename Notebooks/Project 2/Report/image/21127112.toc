@@ -1,0 +1,10 @@
+\babel@toc {vietnamese}{}\relax 
+\contentsline {section}{\numberline {1}Hướng dẫn sử dụng}{2}{section.1}%
+\contentsline {section}{\numberline {2}Ý tưởng thực hiện}{2}{section.2}%
+\contentsline {section}{\numberline {3}Mô tả}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Nhóm hàm chính}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Nhom hàm bổ trợ}{2}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Nhận xét}{3}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Về ảnh đầu ra}{3}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Về tài nguyên sử dụng}{3}{subsubsection.3.3.2}%
+\contentsline {section}{\numberline {4}Tài liệu tham khảo}{4}{section.4}%

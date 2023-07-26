@@ -1,0 +1,165 @@
+\documentclass{article}
+\usepackage[a4paper,top=3cm,bottom=2.5cm,left=2.5cm,
+            right=2cm,marginparwidth=1.75cm,
+            headheight=5pt]{geometry}
+\usepackage[T5]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[document]{ragged2e}
+\usepackage[vietnamese]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{floatrow}
+\usepackage[nottoc]{tocbibind}
+\usepackage{mdframed}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tgbonum}
+\usepackage{type1cm}
+\usepackage{indentfirst}
+\usepackage{lettrine}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{lastpage}
+\usepackage{url}
+\addto\captionsenglish{
+  \renewcommand{\contentsname}{MỤC LỤC}%
+  \renewcommand{\listfigurename}{Danh sách ảnh}%
+  \renewcommand{\listtablename}{Danh sách bảng}%
+  \renewcommand{\figurename}{Hình}
+  \renewcommand{\tablename}{Bảng}
+}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Toán ứng dụng và thống kê}
+\lhead{\color{cyan}Đồ án 2: Image Processing}
+\lfoot{Trang \thepage /\pageref{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\parindent}{5pt}
+\setlength{\parskip}{1cm}
+\renewcommand{\baselinestretch}{1.5}
+\newmdenv[linecolor=black,skipabove=\topsep,skipbelow=\topsep,
+leftmargin=2.5cm,rightmargin=2.5cm,
+innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
+\usepackage{multicol}
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage{apacite}
+\usepackage{tikz}
+\graphicspath{{Figures/}} 
+\usepackage[square, numbers, comma, sort&compress]{natbib}  
+\usepackage{lipsum}
+\usetikzlibrary{calc}
+\setlength{\columnseprule}{2pt}
+\def\columnseprulecolor{\color{black}}
+\def\maru#1{\textcircled{\scriptsize#1}}
+
+\begin{document}
+% Bìa trang
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay,inner sep=0,outer sep=0]
+     \draw[blue!70!black,line width=4pt] ([xshift=-1.5cm,yshift=-2cm]current page.north east) coordinate (A)--([xshift=2cm,yshift=-2cm]current page.north west) coordinate(B)--([xshift=2cm,yshift=2cm]current page.south west) coordinate (C)--([xshift=-1.5cm,yshift=2cm]current page.south east) coordinate(D)--cycle;
+
+     \draw ([yshift=0.5cm,xshift=-0.5cm]A)-- ([yshift=0.5cm,xshift=0.5cm]B)--
+     ([yshift=-0.5cm,xshift=0.5cm]B) --([yshift=-0.5cm,xshift=-0.5cm]B)--([yshift=0.5cm,xshift=-0.5cm]C)--([yshift=0.5cm,xshift=0.5cm]C)--([yshift=-0.5cm,xshift=0.5cm]C)-- ([yshift=-0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=0.5cm]D)--([yshift=-0.5cm,xshift=0.5cm]A)--([yshift=-0.5cm,xshift=-0.5cm]A)--([yshift=0.5cm,xshift=-0.5cm]A);
+
+
+     \draw ([yshift=-0.3cm,xshift=0.3cm]A)-- ([yshift=-0.3cm,xshift=-0.3cm]B)--
+     ([yshift=0.3cm,xshift=-0.3cm]B) --([yshift=0.3cm,xshift=0.3cm]B)--([yshift=-0.3cm,xshift=0.3cm]C)--([yshift=-0.3cm,xshift=-0.3cm]C)--([yshift=0.3cm,xshift=-0.3cm]C)-- ([yshift=0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=-0.3cm]D)--([yshift=0.3cm,xshift=-0.3cm]A)--([yshift=0.3cm,xshift=0.3cm]A)--([yshift=-0.3cm,xshift=0.3cm]A);
+
+   \end{tikzpicture}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\center
+
+\textsc{\Large TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN}\\[0.5cm]
+\textsc{\Large KHOA CÔNG NGHỆ THÔNG TIN}\\[1cm]
+\includegraphics[width=0.3\textwidth]{logo/KHTN.jpg}\\[1cm]
+
+\HRule \\[0.4cm]
+{\huge \bfseries ĐỒ ÁN 2: IMAGE PROCESSING} \\[0.4cm]
+{\large TOÁN ỨNG DỤNG VÀ THỐNG KÊ}\\[0.1cm]
+\HRule \\[1.5cm]
+
+\centerline{\Large{\textbf{Triệu Nhật Minh — 21127112 — 21CLC02}}}
+\vspace{2.5cm}
+\centerline{\large{\textit{Giảng viên hướng dẫn}}}
+\vspace{0.25cm}
+\centerline{\large{Vũ Quốc Hoàng}}
+\centerline{\large{Lê Thanh Tùng}}
+\centerline{\large{Nguyễn Văn Quang Huy}}
+\centerline{\large{Phan Thị Phương Uyên}}
+
+\vspace{2.5cm}
+\centerline{\today}
+
+
+\vfill % Wipe blank space of the page.
+\end{titlepage}
+
+% Mục lục tự động
+\setlength{\parskip}{.5em}
+\tableofcontents
+\newpage
+
+% Table of Figures & Tables
+\setlength{\parskip}{.5em}
+%\listoffigures
+%\listoftables
+\newpage
+
+% Bắt đầu nội dung
+\section{Hướng dẫn sử dụng}
+\begin{description}
+  \item[Bước 1:] Run all các cell trong notebook \textbf{21127112.ipynb} (hoặc chỉ run cell cuối cùng để chạy hàm main nếu đã khởi chạy các hàm bổ trợ từ trước).
+  \item[Bước 2: ] Nhập đường dẫn tới ảnh cần nén (chỉ cần tên ảnh nếu ảnh đã nằm cùng thư mục với notebook).
+  \item[Bước 3: ] 
+\end{description}
+
+\section{Ý tưởng thực hiện}
+\begin{description}
+  \item[Bước 1: ] 
+\end{description}
+
+\section{Mô tả}
+% Template mô tả hàm
+% \textbf{Input:} \\
+% \textbf{Output:}
+
+% \paragraph{Mô tả:}
+\subsection{Nhóm hàm chính}
+
+\subsection{Nhom hàm bổ trợ}
+\pagebreak
+\newpage
+\subsection{Nhận xét}
+\subsubsection{Về ảnh đầu ra}
+
+\subsubsection{Về tài nguyên sử dụng}
+
+\centerline{\includegraphics[width=0.2\textwidth]{image/performance.png}}
+\newpage
+\section{Tài liệu tham khảo}
+\begin{itemize}
+    \item \href{https://youtu.be/uLs-EYUpGAw?t=231}{How to Code K-Means in Python (No Sklearn)}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.reshape.html}{numpy.reshape}
+    \item \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.randint.html}{numpy.random.randint}
+    \item \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html}{numpy.random.choice}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.sum.html}{numpy.sum}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.argmin.html}{numpy.argmin}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.mean.html}{numpy.mean}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.array_equal.html}{numpy.array\_equal}
+    \item \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html}{matplotlib.pyplot.figure}
+    \item \href{https://www.reddit.com/r/learnpython/comments/4g4dru/error_converting_images_to_pdf/}{Error converting images to pdf}
+    \item \href{https://numpy.org/doc/stable/user/basics.broadcasting.html}{Broadcasting explained}
+\end{itemize}
+
+\end{document}
