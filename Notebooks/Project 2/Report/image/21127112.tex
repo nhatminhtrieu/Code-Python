@@ -16,6 +16,7 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{longtable}
 \usepackage{titlesec}
 \usepackage{floatrow}
 \usepackage[nottoc]{tocbibind}
@@ -106,7 +107,7 @@ innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
 \end{titlepage}
 
 % Mục lục tự động
-\setlength{\parskip}{.5em}
+\setlength{\parskip}{.7em}
 \tableofcontents
 \newpage
 
@@ -120,25 +121,75 @@ innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
 \section{Hướng dẫn sử dụng}
 \begin{description}
   \item[Bước 1:] Run all các cell trong notebook \textbf{21127112.ipynb} (hoặc chỉ run cell cuối cùng để chạy hàm main nếu đã khởi chạy các hàm bổ trợ từ trước).
-  \item[Bước 2: ] Nhập đường dẫn tới ảnh cần nén (chỉ cần tên ảnh nếu ảnh đã nằm cùng thư mục với notebook).
-  \item[Bước 3: ] 
+  \item[Bước 2: ] Nhập đường dẫn tới ảnh cần xử lý (chỉ cần tên ảnh nếu ảnh đã nằm cùng thư mục với notebook).
+  \item[Bước 3: ] Chọn chức năng cần thực hiện (từ 0-8 tương ứng với các chức năng và 9 để thoát chương trình).
+  \item[Bước 4: ] 
 \end{description}
 
-\section{Ý tưởng thực hiện}
-\begin{description}
-  \item[Bước 1: ] 
-\end{description}
+\section{Đánh giá kết quả}
+\begin{longtable}[c]{|r|l|c|l|}
+  \hline
+  \rowcolor[HTML]{00D2CB} 
+  \multicolumn{1}{|c|}{\cellcolor[HTML]{00D2CB}{\color[HTML]{FFFFFF} \textbf{STT}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{00D2CB}{\color[HTML]{FFFFFF} \textbf{Chức năng}}} & {\color[HTML]{FFFFFF} \textbf{Mức độ hoàn thành}} & \multicolumn{1}{c|}{\cellcolor[HTML]{00D2CB}{\color[HTML]{FFFFFF} \textbf{Kết quả}}} \\ \hline
+  \endfirsthead
+  %
+  \endhead
+  1 & Thay đổi độ sáng cho ảnh & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_brightness_128.png}} \\ \hline
+  2 & Thay đổi độ tương phản & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_contrast_128.png}} \\ \hline
+  3 & Lật ảnh ngang & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_flip_horizontal.png}} \\ \hline
+  4 & Lật ảnh dọc & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_flip_vertical.png}} \\ \hline 
+  5 & Chuyển đổi thành ảnh xám & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_grayscale.png}} \\ \hline
+  6 & Chuyển đổi thành ảnh sepia & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_sepia.png}} \\ \hline
+  7 & Làm mờ & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_blur.png}} \\ \hline
+  8 & Làm sắc nét ảnh & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_sharpen.png}} \\ \hline
+  9 & Cắt ảnh theo kích thước (cắt ở trung tâm) & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_center_crop.png}} \\ \hline
+  10 & Cắt ảnh theo khung hình tròn & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_circular_crop.png}} \\ \hline
+  11 & Cắt ảnh theo khung elip & 100\% & \parbox[c]{8em}{\includegraphics[width=8em]{image/lena_elliptical_crop.png}} \\ \hline
+\end{longtable}
+
+% \begin{table}[ht] 
+%   \centering
+%   \begin{tabular}{|l|l|l|l|l|} \hline 
+%       Stimuli Category & Familiar Organism & Growth Model & Metamorphosis & Figure \\ \hline
+%       \textbf{FDM} & Yes & Dramatic & Yes & \parbox[c]{7em}{\includegraphics[width=0.15\textwidth]{image/lena_brightness_128.png}} \\ \hline
+%   \end{tabular}
+% \end{table}
 
 \section{Mô tả}
+\textcolor{red}{Để thuận tiện cho phần trình bày bên dưới, từ bây giờ, mỗi điểm ảnh gồm 3 giá trị của kênh màu RGB sẽ được xem như một phần tử màu. Do đó, ma trận các điểm ảnh được xem như mảng 2 chiều các điểm ảnh, kí hiệu: \textit{img\_2d}. }
 % Template mô tả hàm
 % \textbf{Input:} \\
 % \textbf{Output:}
 
 % \paragraph{Mô tả:}
 \subsection{Nhóm hàm chính}
+\subsubsection{Hàm change\_brightness}
+\textbf{Input:} Mảng NumPy 2 chiều các điểm ảnh \textit{img\_2d}, giá trị độ sáng \textit{brightness} (mặc định là 128 nếu không truyền tham số vào hàm). \\
+\textbf{Output:} Mảng NumPy 2 chiều các điểm ảnh, chuỗi kí tự chứa hậu tố của tên file ảnh sau xử lý.
 
-\subsection{Nhom hàm bổ trợ}
-\pagebreak
+\paragraph{Ý tưởng thực hiện:} Thay đổi độ sáng bức ảnh là cùng lúc thay đổi giá trị trong phần tử màu của từng pixel ảnh cho một hằng số. Bức ảnh sau khi thay đổi độ sáng sẽ có màu sáng hơn hoặc tối hơn tùy thuộc vào giá trị của hằng số này, càng tối nghĩa là càng nhiều pixel có giá trị màu gần 0 và ngược lại.
+
+\paragraph{Mô tả:} Để thay đổi độ sáng của ảnh, ta chỉ cần cộng thêm giá trị \textit{brightness} vào mỗi giá trị trong phần tử màu của mảng \textit{img\_2d}. Tuy nhiên, giá trị này có thể vượt quá khoảng giá trị cho phép của một giá trị của phần tử màu (từ 0 đến 255). Do đó, trước khi thực hiện phép cộng, ta cần đổi kiểu dữ liệu của mảng \textit{img\_2d} thành int64 để có thể lưu được các giá trị nguyên âm và giá trị nguyên dương lớn hơn 255. Sau khi thực hiện xong, kết hợp việc giới hạn giá trị sử dụng hàm \textit{limit\_value} và ép kiểu dữ liệu về uint8, ta được mảng 2 chiều các điểm ảnh sau khi thay đổi độ sáng.
+
+\subsubsection{Hàm change\_contrast}
+
+
+\subsubsection{Hàm flip\_image}
+\subsubsection{Hàm convert\_grayscale}
+\subsubsection{Hàm convert\_sepia}
+\subsubsection{Hàm convolute\_2D}
+\subsubsection{Hàm blur\_image / sharpen\_image}
+\subsubsection{Hàm center\_crop}
+\subsubsection{Hàm circular\_crop}
+\subsubsection{Hàm elliptical\_crop}
+
+\subsection{Nhóm hàm bổ trợ}
+\subsubsection{Hàm limit\_value}
+\subsubsection{Hàm show\_image}
+\subsubsection{Hàm write\_image}
+\subsubsection{Hàm read\_image}
+\subsubsection{Hàm main}
+
 \newpage
 \subsection{Nhận xét}
 \subsubsection{Về ảnh đầu ra}
@@ -149,16 +200,7 @@ innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
 \newpage
 \section{Tài liệu tham khảo}
 \begin{itemize}
-    \item \href{https://youtu.be/uLs-EYUpGAw?t=231}{How to Code K-Means in Python (No Sklearn)}
-    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.reshape.html}{numpy.reshape}
-    \item \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.randint.html}{numpy.random.randint}
-    \item \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html}{numpy.random.choice}
-    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.sum.html}{numpy.sum}
-    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.argmin.html}{numpy.argmin}
-    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.mean.html}{numpy.mean}
-    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.array_equal.html}{numpy.array\_equal}
     \item \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html}{matplotlib.pyplot.figure}
-    \item \href{https://www.reddit.com/r/learnpython/comments/4g4dru/error_converting_images_to_pdf/}{Error converting images to pdf}
     \item \href{https://numpy.org/doc/stable/user/basics.broadcasting.html}{Broadcasting explained}
 \end{itemize}
 
