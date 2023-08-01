@@ -265,7 +265,64 @@ Do trục cuối cùng của mảng \textit{img\_2d} là mảng 1 chiều chứa
 Với trọng số như trên, các giá trị của phần tử màu có thể vượt quá giá trị cho phép của kiểu dữ liệu uint8 nên cần giới hạn giá trị của kết quả trả về bằng hàm \textit{limit\_value}.
 
 \subsubsection{Hàm convolute\_2D}
+\textbf{Input:} Mảng NumPy 2 chiều các điểm ảnh \textit{img\_2d}, ma trận lọc \textit{kernel}. \\
+\textbf{Output:} Kết quả của phép ''tích chập'' giữa NumPy 2 chiều các điểm ảnh \textit{img\_2d} với ma trận lọc \textit{kernel}, chuỗi kí tự chứa hậu tố của tên file ảnh sau xử lý. \\
+\paragraph{Ý tưởng thực hiện:} Trong lĩnh vực xử lý ảnh, một kernel là một công cụ toán học được áp dụng lên ảnh để thực hiện các hiệu ứng như làm mờ, làm sắc nét, phát hiện cạnh,\dots Điều này được thực hiện bằng cách tính toán giá trị của mỗi pixel trong ảnh đầu ra dựa trên giá trị của các pixel xung quanh (bao gồm cả chính nó) trong ảnh đầu vào, kernel là ma trận chứa các hệ số để tính toán. \par
+Về mặt toán học, công thức của phép tích chập (convolution) trong xử lý ảnh là:
+\[ g(x, y) = \omega * f(x, y) = \sum_{dx=-a}^{a} \sum_{dy=-b}^{b} \omega (dx, dy) * f(x-dx, y-dy) \]
+với:
+\begin{itemize}
+  \item $g(x, y)$ là giá trị của điểm ảnh ở vị trí $(x, y)$ trong ảnh đầu ra.
+  \item $f(x, y)$ là giá trị của điểm ảnh ở vị trí $(x, y)$ trong ảnh đầu vào.
+  \item $\omega$ là ma trận lọc (kernel).
+  \item Mỗi phần tử của kernel bộ lọc nằm trong khoảng $-a \leq dx \leq a$ và $-b \leq dy \leq b$.
+\end{itemize}
+
+Nói về phép tích chập, tích chập là quá trình cộng từng phần tử của hình ảnh với các hàng xóm cục bộ của nó, có trọng số bởi kernel. Điều này liên quan đến một dạng tích chập toán học. Phép toán ma trận được thực hiện - tích chập - không phải là phép nhân ma trận. Gốc (origin) là vị trí của pixel đầu ra. Đối với một kernel đối xứng, gốc thường là phần tử ở trung tâm ma trận. \par 
+
+Để tránh đi chi tiết về phép tích chập, phép tích chập được sử dụng trong hàm này là discrete convolution. Nếu thực hiện theo phương pháp tường minh, độ phức tạp của thuật toán này có thể lên đến $N^2$ với $N$ là kích thước của ma trận ảnh đầu vào. Tuy nhiên, ta có thể tối ưu bằng cách dùng thuật toán biến đổi Fourier nhanh (Fast Fourier Transform - FFT). Và trong NumPy có hàm \textit{numpy.fft.fftn} để thực hiện việc này. \par
+
+Dù đã được tối ưu hơn nhưng phép tích chập mà ta nói đến từ đầu chỉ đang thực hiện trên mảng 2 chiều, nhưng với bức ảnh đầu ra là mảng 3 chiều, ta cần thực hiện phép tích chập trên từng kênh màu của ảnh đầu vào. 
+
+Kernel được sử dụng trong hàm này là kernel Gaussian kích thước 3$\times$3 và kernel làm sắc nét kích thước 3$\times$3. Ma trận biểu diễn 2 kernel này được thể hiện như sau:
+\[ \text{Gaussian kernel} = \frac{1}{16} \begin{bmatrix} 1 & 2 & 1 \\ 2 & 4 & 2 \\ 1 & 2 & 1 \end{bmatrix} \]
+\[ \text{Sharpen kernel} = \begin{bmatrix} 0 & -1 & 0 \\ -1 & 5 & -1 \\ 0 & -1 & 0 \end{bmatrix} \]
+\paragraph{Mô tả:} 
+Nhằm phục vụ cho việc thực hiện tính chập nhanh dụng kỹ thuật FFT như đã nói ở trên, ta cần chuyển ma trận ảnh đầu vào và kernel về dạng ma trận phổ (spectrum) bằng cách sử dụng hàm \textit{numpy.fft.fftn} (\textcolor{red}{numpy.fft.fftn(a, s=None, axes=None)}). Sau đó, ta nhân 2 ma trận phổ này với nhau, và sử dụng hàm \textit{numpy.fft.ifftn} để chuyển về dạng ma trận điểm ảnh. \par
+
+% Đoạn này dùng lúc sau khi giải thích dùng real
+
+
+Tham số s trong hàm \textit{numpy.fft.fftn} xác định kích thước của mảng đầu ra. Trong trường hợp của hàm convolute\_2D, giá trị của tham số s được đặt là \textit{img\_2d.shape[:2]}. \par 
+
+Khi sử dụng slicing [ :2], ta chỉ lấy hai phần tử đầu tiên của tuple này, làm cho kích thước của mảng đầu ra sẽ bằng với kích thước của hai chiều đầu tiên của mảng img\_2d. \par
+
+Trong trường hợp cụ thể của kernel, điều này có nghĩa là kích thước của kernel\_fft sẽ bằng với kích thước của hai chiều đầu tiên của mảng img\_2d. Điều này giúp đảm bảo rằng kích thước của kernel\_fft và img\_fft (FFT của mảng 2 chiều các điểm ảnh) bằng nhau, do đó chúng có thể được nhân từng phần tử với nhau trong miền tần số bằng phép nhân element-wise. \par
+
+Tham số axes trong hàm \textit{np.fft.fftn} xác định các trục mà phép biến đổi Fourier nhanh (FFT) được thực hiện. Bằng việc truyền tham sô \textit{axes=(0, 1)}, ta đang chỉ định rằng phép biến đổi FFT sẽ được thực hiện trên hai trục đầu tiên của mảng đầu vào. Với \textit{kernel}, phép biến đổi FFT sẽ được thực hiện trên toàn bộ kernel. Còn với mảng \textit{img\_2d}, mảng đầu vào là một mảng 3 chiều với kích thước (height, width, channels). Khi đặt axes=(0, 1), phép biến đổi FFT sẽ được thực hiện riêng biệt cho từng kênh màu của hình ảnh. Điều này được thực hiện bằng cách lặp qua từng kênh màu và tính FFT cho từng kênh một cách riêng biệt. \par
+
+Với số lần lặp là không đáng kể (lặp với số kênh màu của bức ảnh), ta có thể dùng vòng lặp lần lượt thực hiện FFT trên từng kênh màu. FFT nghịch đảo là một phép biến đổi ngược lại của FFT, cho phép chuyển đổi một tín hiệu từ miền tần số về miền không gian. Trong trường hợp này, convolved\_fft là một tín hiệu trong miền tần số, do đó việc tính FFT nghịch đảo của nó sẽ cho ta kết quả trong miền không gian.
+
+Sau khi tính FFT nghịch đảo, ta chỉ lấy phần thực của kết quả bằng cách sử dụng thuộc tính .real. Điều này là cần thiết vì kết quả của phép tính FFT nghịch đảo là một số phức, và ta chỉ quan tâm đến phần thực của nó. \par
+
+Về phần \textcolor{blue}{padding}, từ hình minh hoạ:
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width = 0.5\textwidth]{image/padding.jpg}
+\end{figure}
+\par
+
+Với các điểm ảnh tại góc, ta có thể thấy rằng các điểm ảnh này không được tính toán với các điểm ảnh xung quanh, và để tránh kết quả không mong muốn khi tính toán, ta gọi hàm \textit{np.pad} để thêm các điểm ảnh ở xung quanh vào. \textit{numpy.pad} cho phép ta lựa chọn các điểm ảnh được thêm vào, và trong trường hợp này, ta thêm các điểm ảnh có giá trị bằng giá trị ở viền (edge) của ảnh. Với tham số \textit{pad\_width}, từ ảnh minh hoạ, ta có thể thấy rằng với kích thước kernel là 3x3 thì ta cần thêm (3 // 2 = 1) điểm ảnh vào ở mỗi cạnh của ảnh. Việc cắt padding [padding:-padding, padding:-padding] để loại bỏ các phần đệm của mảng kết quả sau khi tính FFT nghịch đảo. Ví dụ, với padding có giá trị là 1, thì slicing `[1:-1, 1:-1]` sẽ loại bỏ một hàng và một cột ở mép trên và mép dưới của mảng kết quả. Điều này giúp thu được một mảng mới có kích thước bằng với kích thước ban đầu của hình ảnh và không có các phần đệm.\par
+
+Thực nghiệm cho thấy kết quả trả về của \textit{kernel\_fft} có kiểu dữ liệu của phần thực của phần tử là float64. Do đó, ta cần ép kiểu dữ liệu của mảng kết quả là float64 để tránh lỗi về kiểu dữ liệu. Kết quả cuối cùng trước khi thoát hàm cần được xử lý bởi hàm \textit{limit\_value} và được chuyển về kiểu dữ liệu uint8. \par
+
+
 \subsubsection{Hàm blur\_image / sharpen\_image}
+\textbf{Input:} Mảng NumPy 2 chiều các điểm ảnh \textit{img\_2d} \\
+\textbf{Output:} Mảng NumPy 2 chiều các điểm ảnh \textit{img\_2d} đã được xử lý làm mờ hoặc sắc nét, chuỗi kí tự chứa hậu tố của tên file ảnh đầu ra. \\
+\paragraph{Ý tưởng thực hiện:} Để làm mờ ảnh, ta cần thực hiện phép tích chập giữa ảnh đầu vào và kernel. Với kernel có kích thước 3x3, ta có thể thực hiện phép tích chập bằng cách gọi lại hàm \textit{convolve\_2d} đã được viết ở trên. Kernel được sử dụng là giá trị cố định được lưu trong biến \textit{gaussian\_kernel}. Tương tự, việc làm sắc nét cũng được thực hiện bằng cách gọi lại hàm \textit{convolve\_2d} với kernel là \textit{sharpen\_kernel}. \par
+\paragraph{Mô tả:}
+Về bản chất, việc gọi hai hàm này để truyền tham số là kernel và thực hiện tích chập cũng như tránh việc gọi hai hàm blur và sharpen cùng thực hiện tích chập với kernel khác nhau. Điều này giúp tổng thể đoạn code không bị lặp lại nhiều lần, thuận tiện cho việc tối ưu nếu có thể. \par
 
 \subsubsection{Hàm center\_crop}
 \textbf{Input:} Mảng NumPy 2 chiều các điểm ảnh \textit{img\_2d}, kích thước chiều cao \textit{height} và chiều rộng \textit{width} của ảnh đầu ra (mặc định kích thước ảnh đầu ra là 256x256 nếu ta không truyền 2 tham số này vào hàm). \\
@@ -321,11 +378,12 @@ với:
   (\frac{1}{a^2} + \frac{1}{b^2})((x-x_0)^2 + (y-y_0)^2) \pm 2(\frac{1}{a^2} - \frac{1}{b^2})(x-x_0) (y-y_0) = 2
   \label{eq:elip}
 \end{equation}
-Tương tự như hàm \textit{circular\_crop}, ta sử dụng hàm \textit{numpy.ogrid} để tạo ra mask, tuy nhiên, ở khung ảnh elip này là 2 hình elip nên cần 2 mask. Bất kì điểm ảnh nào nằm ngoài cả 2 mask đều gán giá trị bằng 0.\\
+Tương tự như hàm \textit{circular\_crop}, ta sử dụng hàm \textit{numpy.ogrid} để tạo ra mask, tuy nhiên, ở khung ảnh elip này là 2 hình elip nên cần 2 mask. Bất kì điểm ảnh nào nằm ngoài cả 2 mask đều gán giá trị bằng 0. \par
 Đến với việc tìm a, b cho phương trình elip, ta sẽ xem bức ảnh đầu vào có kích thước side$\times$side pixel. Để đơn giản, ta sẽ thu nhỏ tỉ lệ lại thành hình vuông kích thước 1$\times$1. Sử dụng phần mềm phác thảo hình học GeoGebra, để tối giản hai thành phần x\textsubscript 0, y\textsubscript 0, ta chọn hình vuông có toạ độ góc trái trên là (-0.5, 0.5) và góc phải dưới là (0,5, -0.5), minh hoạ như hình bên dưới:
 \begin{figure}[!ht]
+  \centering
   \includegraphics[width = 0.5\textwidth]{image/square_illustrator.png}
-\end{figure} \par
+\end{figure} \par 
 Thực hiện nhiều thí nghiệm với các cặp tham số a, b khác nhau ta được một vài kết luận nhỏ:
 % insert multiple images
 \begin{figure}[!ht]
@@ -343,21 +401,21 @@ Thực hiện nhiều thí nghiệm với các cặp tham số a, b khác nhau t
     \caption{a = 1, b = -0.8}
   \end{subfigure}
 \end{figure} \par
-Tỉ lệ của $\frac{\left\lvert a \right\rvert}{\left\lvert b\right\rvert }$ càng gần 0 thì elip có xu hướng ''nhọn'' hoặc ''dẹt'' về 2 đầu, ngược lại, tỉ lệ càng gần 1 thì elip có xu hướng ''tròn'' hơn. Và thực vậy, khi a = b thì ta được phương trình đường tròn.\\
-Như vậy, từ 3 hình trên ta có thê xác định tỉ lệ $\frac{\left\lvert a \right\rvert}{\left\lvert b\right\rvert }$ để được khung hình elip như mong muốn, tỉ lệ này sẽ xấp xỉ 2. Vai trò của a, b có một chút ''đặc biệt'', cụ thể, nếu $\left\lvert a \right\rvert > \left\lvert b \right\rvert$ thì elip đỏ (tượng trưng cho dấu cộng trong phương trình \ref{eq:elip}) nghiêng về bên phải, ngược lại, elip xanh (tượng trưng cho dấu trừ trong phương trình \ref{eq:elip}) nghiêng về bên trái. Để thống nhất hướng nghiêng của elip, ta sẽ chọn a, b sao cho $\left\lvert a \right\rvert < \left\lvert b \right\rvert$.\\
+Tỉ lệ của $\frac{\left\lvert a \right\rvert}{\left\lvert b\right\rvert }$ càng gần 0 thì elip có xu hướng ''nhọn'' hoặc ''dẹt'' về 2 đầu, ngược lại, tỉ lệ càng gần 1 thì elip có xu hướng ''tròn'' hơn. Và thực vậy, khi a = b thì ta được phương trình đường tròn. \par
+Như vậy, từ 3 hình trên ta có thê xác định tỉ lệ $\frac{\left\lvert a \right\rvert}{\left\lvert b\right\rvert }$ để được khung hình elip như mong muốn, tỉ lệ này sẽ xấp xỉ 2. Vai trò của a, b có một chút ''đặc biệt'', cụ thể, nếu $\left\lvert a \right\rvert > \left\lvert b \right\rvert$ thì elip đỏ (tượng trưng cho dấu cộng trong phương trình \ref{eq:elip}) nghiêng về bên phải, ngược lại, elip xanh (tượng trưng cho dấu trừ trong phương trình \ref{eq:elip}) nghiêng về bên trái. Để thống nhất hướng nghiêng của elip, ta sẽ chọn a, b sao cho $\left\lvert a \right\rvert < \left\lvert b \right\rvert$. \par
 Sau khi tìm được a, b mong muốn, ta cần nhân với side để mở rộng elip phù hợp kích thước ảnh ban đầu.
-\paragraph{Mô tả:} Đầu tiên ta tìm toạ độ vị trí trung tâm của hình elip cần cắt. Cách tính đại lượng này tương tự cách tìm tâm hình tròn. Tiếp theo, với 2 giá trị a, b tìm được từ phần ý tưởng, ta tìm được giá trị \textit{new\_a}, \textit{new\_b} tương ứng với kích thước ảnh ban đầu. Sau đó, ta tạo ra 2 mask, mỗi mask là một hình elip, bằng cách sử dụng hàm \textit{numpy.ogrid} và phương trình elip đã được đưa ra. Sau đó, ta gán giá trị 0 cho các điểm ảnh nằm ngoài cả 2 mask.\\
+\paragraph{Mô tả:} Đầu tiên ta tìm toạ độ vị trí trung tâm của hình elip cần cắt. Cách tính đại lượng này tương tự cách tìm tâm hình tròn. Tiếp theo, với 2 giá trị a, b tìm được từ phần ý tưởng, ta tìm được giá trị \textit{new\_a}, \textit{new\_b} tương ứng với kích thước ảnh ban đầu. Sau đó, ta tạo ra 2 mask, mỗi mask là một hình elip, bằng cách sử dụng hàm \textit{numpy.ogrid} và phương trình elip đã được đưa ra. Sau đó, ta gán giá trị 0 cho các điểm ảnh nằm ngoài cả 2 mask. \par
 Việc gọi hai biến \textit{const\_1} và \textit{const\_2} là vì ta muốn đơn giản việc tính toán giá trị của $\frac{1}{a^2} + \frac{1}{b^2}$ và $\frac{1}{a^2} - \frac{1}{b^2}$
 Áp dụng ý tưởng tìm a, b như phần ý tưởng bên trên cùng mô phỏng trên GeoGebra, ta chọn a = 0.3, b = 0.6 và thu được kết quả như hình bên dưới:
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=0.5\textwidth]{image/lenna_03_06.png}
 \end{figure} \par
-Có thể thấy, khung elip được định hình nhưng khung vẫn chưa chạm các cạnh ngoài của bức ảnh. Sử dụng kĩ thuật chặt nhị phân, giá trị a, b tìm được là 0.35 và 0.61375 (với bức ảnh kích thước 1$\times$1), ảnh đầu ra đạt độ chính xác 99.1\% so với bức ảnh đề bài (tham khảo kết quả từ phép đo tại website: \href{https://www.imgonline.com.ua/eng/similarity-percent.php}{imgonline.com.ua}).\\
+Có thể thấy, khung elip được định hình nhưng khung vẫn chưa chạm các cạnh ngoài của bức ảnh. Sử dụng kĩ thuật chặt nhị phân, giá trị a, b tìm được là 0.35 và 0.61375 (với bức ảnh kích thước 1$\times$1), ảnh đầu ra đạt độ chính xác 99.1\% so với bức ảnh đề bài (tham khảo kết quả từ phép đo tại website: \href{https://www.imgonline.com.ua/eng/similarity-percent.php}{imgonline.com.ua}). \par
 Việc tạo bản sao của ảnh đầu vào và thay đổi kích thước ảnh đầu ra để phù hợp với kích thước ảnh đầu vào là để tránh việc mảng điểm ảnh truyền vào bị thay đổi, đã được trình bày rõ hơn ở phần cuối mô tả ở hàm \textit{circular\_crop}.
 \subsection{Nhóm hàm bổ trợ}
 \subsubsection{Hàm limit\_value}
-\textbf{Input:} Mảng NumPy 2 chiều các điểm ảnh \textit{img\_2d} \\
+\textbf{Input:} Mảng NumPy 2 chiều các điểm ảnh \textit{img\_2d}. \\
 \textbf{Output:} Mảng NumPy 2 chiều các điểm ảnh với các giá trị đã được giới hạn trong khoảng [0, 255].
 
 \paragraph{Ý tưởng thực hiện:} Trong quá trình tính toán giá trị mới cho các phần tử màu trong điểm ảnh, không thể tránh khỏi trường hợp giá trị mới vượt quá khoảng [0, 255]. Vì vậy, ta cần giới hạn giá trị mới trong khoảng [0, 255]. \par
@@ -388,13 +446,70 @@ List kết quả không là output của hàm nhưng sẽ xử lý theo hướng
 \paragraph{Mô tả:} Đầu tiên, hàm in ra các chức năng xử lý ảnh, sau đó yêu cầu người dùng nhập vào đường dẫn ảnh đầu vào và chức năng xử lý ảnh. Nếu đường dẫn ảnh và chức năng hợp lệ, ta sẽ lưu tên ảnh đầu vào và hậu tố ảnh đầu vào. Tuỳ thuộc vào chức năng được gọi mà (các) hàm chức năng tương ứng sẽ được thực thi và kết quả thu được sẽ được thêm vào danh sách \textit{result} (list các tuple). \par
 Với các chức năng chỉ 1 tuple trả về, ta dùng phương thức \textit{append} quen thuộc, tuy nhiên, để tránh việc lặp code, với những chức năng trả về từ 2 tuple (ví dụ lật ảnh ngang/dọc trả về cùng lúc ảnh lật ngang và ảnh lật dọc mà không cần hỏi người dùng) ta sử dụng phương thức \textit{extend} để thêm các tuple vào danh sách. Phương thức extend cho phép thêm liên tiếp các phần tử của một vào một list khác. Sau khi thực hiện xong các hàm chức năng, ta sẽ lưu ảnh đầu ra và hiển thị ảnh đầu ra tương ứng với hàm chức năng. \par
 Khi xét đến kết quả trả về của các hàm chức năng, ta không truyền vào tên ảnh đầu vào là một tham số nên để phân biệt tên giữa các hàm, ta sẽ lưu thêm hậu tố vào tên ảnh đầu ra. Kết quả đó được thêm vào list \textit{result} và trước khi gọi hàm \textit{write\_image}, ta còn chỉnh sửa lại tên của bức ảnh đầu ra bằng việc cộng chuỗi. Đồng thời list trên cũng được phân rã (parse) lấy phần tử đầu tiên thêm vào list \textit{img\_list} để hiển thị ảnh đầu ra và phần tử thứ hai (sau khi xử lý chuỗi) thêm vào list \textit{img\_list\_name} để lưu tên ảnh đầu ra và gọi hàm \textit{show\_image} cũng như \textit{write\_image}.
-\subsection{Nhận xét}
-\subsubsection{Về ảnh đầu ra}
 
-\subsubsection{Về tài nguyên sử dụng}
+\subsection{Hình ảnh đầu ra ứng với từng chức năng}
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_brightness_128.png}
+    \caption{Thay đổi độ sáng (brightness=128)}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_contrast_128.png}
+    \caption{Thay đổi độ tương phản (contrast=128)}
+  \end{subfigure}
+\end{figure}
+\pagebreak
 
-\centerline{\includegraphics[width=0.2\textwidth]{image/performance.png}}
+\begin{figure}[!ht]
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_flip_horizontal.png}
+    \caption{Lật ảnh ngang}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_flip_vertical.png}
+    \caption{Lật ảnh dọc}
+  \end{subfigure}
+\end{figure}
+\pagebreak
+\begin{figure}[!ht]
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_grayscale.png}
+    \caption{Chuyển sang ảnh xám}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_sepia.png}
+    \caption{Chuyển sang ảnh Sepia}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[!ht]
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_blur.png}
+    \caption{Làm mờ ảnh với kernel size = 3}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_sharpen.png}
+    \caption{Làm sắc nét ảnh}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[!ht]
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_center_crop.png}
+    \caption{Cắt ảnh tại tâm với kích thước 256x256}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_circular_crop.png}
+    \caption{Cắt ảnh theo khung hình tròn}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{image/Lenna_elliptical_crop.png}
+    \caption{Cắt ảnh theo khung hình elip}
+  \end{subfigure}
+\end{figure}
 \newpage
+
 \section{Tài liệu tham khảo}
 \begin{itemize}
   \item Brightness
@@ -418,11 +533,18 @@ Khi xét đến kết quả trả về của các hàm chức năng, ta không t
   \end{enumerate}
   \item Convolute 2D
   \begin{enumerate}
-    \item 
+    \item \href{https://en.wikipedia.org/wiki/Kernel\_(image\_processing)}{Kernel (image processing)}
+    \item \href{https://en.wikipedia.org/wiki/File:2D_Convolution_Animation.gif}{2D Convolution Animation}
+    \item \href{https://en.wikipedia.org/wiki/Convolution#Discrete_convolution}{Discrete convolution}
+    \item \href{https://en.wikipedia.org/wiki/Fast_Fourier_transform}{Fast Fourier transform}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.fft.fftn.html}{NumPy fftn}
+    \item \href{https://codeforces.com/blog/entry/43499}{FFT and Convolution - Codeforces}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.fft.ifftn.html#numpy.fft.ifftn}{NumPy ifftn}
+    \item \href{https://numpy.org/doc/stable/reference/generated/numpy.pad.html}{NumPy pad}
   \end{enumerate}
   \item Blur (Gaussian Blur) / Sharpen (Unsharp Mask) image
   \begin{enumerate}
-    \item 
+    \item \href{https://en.wikipedia.org/wiki/Kernel\_(image\_processing)}{Kernel (image processing)}
   \end{enumerate}
   \item Circular crop
   \begin{enumerate}
