@@ -1,3 +1,4 @@
+\PassOptionsToPackage{vietnamese,english}{babel}
 \documentclass[]{article}
 \usepackage[a4paper,top=3cm,bottom=2.5cm,left=2.5cm,
             right=2cm,marginparwidth=1.75cm,
@@ -63,6 +64,15 @@ innerleftmargin=5cm,innerrightmargin=5cm]{mybox}
 \setlength{\columnseprule}{2pt}
 \def\columnseprulecolor{\color{black}}
 \def\maru#1{\textcircled{\scriptsize#1}}
+
+% ========== [LANGUAGE] ==========
+\def\lang{0} % 0 == English, 1 == Vietnamese
+
+\ifnum\lang = 0
+    \usepackage[english]{babel}
+\fi
+% ========== END OF [LANGUAGE] ==========
+
 
 \begin{document}
 % Bìa trang
