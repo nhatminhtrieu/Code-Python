@@ -7,6 +7,7 @@
 - **16/8/2023**
 1. https://note.nkmk.me/en/python-pandas-len-shape-size/#get-the-number-of-rows-and-columns-dfshape
 2. https://www.geeksforgeeks.org/python-pandas-dataframe-drop_duplicates/
+3. https://www.projectpro.io/recipes/drop-out-highly-correlated-features-in-python
 - **19/8/2023**
 1. https://www.geeksforgeeks.org/ml-multiple-linear-regression-using-python/
 2. https://www.kaggle.com/code/vmalyi/finding-the-most-correlating-variables
