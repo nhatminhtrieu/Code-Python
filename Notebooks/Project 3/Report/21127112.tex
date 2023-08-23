@@ -209,7 +209,7 @@ Trong đó:
     \item n là số lượng điểm dữ liệu.
 \end{itemize}
 
-Do ta cần quan tâm độ tương quan giữa hai đặc trưng chứ không quan tâm chúng có tương quan thuận hay nghịch, nên ta sẽ lấy giá trị tuyệt đối của hệ số tương quan Pearson để tính ma trận tương quan. Bằng cách gọi hàm \textit{abs()} trên DataFrame chứa ma trận tương quan, ta sẽ được ma trận tương quan giữa các cột như hình \ref{fig:1d_corr}.
+Do ta cần quan tâm độ tương quan giữa hai đặc trưng chứ không quan tâm chúng có tương quan thuận hay nghịch, nên ta sẽ lấy giá trị tuyệt đối của hệ số tương quan Pearson để tính ma trận tương quan. Bằng cách gọi hàm \textit{abs()} trên DataFrame chứa ma trận tương quan, ta sẽ được ma trận tương quan giữa các cột như hình 
 
 % Numpy
 \subsubsection{Hàm numpy.linalg.inv}
@@ -220,7 +220,7 @@ Do ta cần quan tâm độ tương quan giữa hai đặc trưng chứ không q
 
 Hàm \textit{numpy.linalg.inv} \cite{numpyNumpylinalginv} được sử dụng để tính ma trận nghịch đảo của ma trận vuông. Trong đồ án này, hàm này được sử dụng để tính ma trận nghịch đảo của ma trận $\text{A}^\text{T} \text{A}$ để tìm nghiệm của hệ phương trình tuyến tính $\text{x} = (\text{A}^\text{T} \text{A})^{-1} \text{A}^\text{T} \text{b}$ (hàm \textit{fit} trong class OLSLinearRegression tự cài đặt, song để tối ưu hoá thời gian tính toán, ta sẽ sử dụng hàm \textit{numpy.linalg.inv} để tính ma trận nghịch đảo thay vì tự cài đặt).
 
-\subsubsection{Hàm numpy.ravel}
+\subsubsection{Hàm numpy.ravel} \label{ravel}
 \noindent
 \textbf{Input:} Mảng NumPy được đọc theo thứ tự được chỉ định bởi tham số order và được đóng gói thành một mảng 1 chiều và được đọc theo thứ tự C. \\
 \textbf{Output:} Mảng NumPy một chiều.
@@ -230,7 +230,7 @@ Trong numpy, tham số order được sử dụng để chỉ định cách mà 
 
 Trong bài toán hồi quy tuyến tính, chúng ta cần tìm một ma trận trọng số self.w sao cho tổng bình phương sai số giữa giá trị dự đoán và giá trị thực tế là nhỏ nhất. Để làm được điều này, chúng ta cần biến đổi ma trận trọng số thành một vector có kích thước bằng với số lượng tham số trong mô hình. Hàm \textit{numpy.ravel()} \cite{numpyNumpyravel} giúp chúng ta thực hiện việc này một cách dễ dàng và nhanh chóng. Bằng cách sử dụng hàm này, chúng ta có thể tính toán tích vô hướng giữa vector trọng số và ma trận đầu vào X bằng cách nhân từng phần tử tương ứng và cộng lại bằng cách gọi hàm \textit{numpy.sum}. Cuối cùng ta thu được giá trị dự đoán cho từng quan sát trong ma trận đầu vào X.
 
-Hàm \textit{numpy.ravel} cũng được sử dụng trong hàm mae \ref{mae} để làm phẳng các mảng đầu vào y và y\_hat thành các mảng 1 chiều. Điều này cho phép tính toán trực tiếp sự khác biệt tuyệt đối giữa các phần tử tương ứng của hai mảng bằng cách trừ chúng và lấy giá trị tuyệt đối. Sau đó, giá trị trung bình của các sự khác biệt tuyệt đối được tính toán bằng hàm \textit{numpy.mean} để trả về giá trị lỗi trung bình tuyệt đối (MAE) giữa hai mảng.
+Hàm \textit{numpy.ravel} cũng được sử dụng trong hàm \ref{mae} để làm phẳng các mảng đầu vào y và y\_hat thành các mảng 1 chiều. Điều này cho phép tính toán trực tiếp sự khác biệt tuyệt đối giữa các phần tử tương ứng của hai mảng bằng cách trừ chúng và lấy giá trị tuyệt đối. Sau đó, giá trị trung bình của các sự khác biệt tuyệt đối được tính toán bằng hàm \textit{numpy.mean} để trả về giá trị lỗi trung bình tuyệt đối (MAE) giữa hai mảng.
 
 \subsubsection{Hàm numpy.sum}
 \noindent
@@ -239,8 +239,8 @@ Hàm \textit{numpy.ravel} cũng được sử dụng trong hàm mae \ref{mae} đ
 \paragraph{Mô tả:}
 
 Hàm \textit{numpy.sum} \cite{numpyNumpysum} được sử dụng để tính tổng các phần tử trong mảng. Trong đồ án này, hàm này được sử dụng để tính tổng các phần tử trong mảng đầu vào X bằng cách nhân từng phần tử tương ứng của vector trọng số và ma trận đầu vào X và cộng lại. Cuối cùng ta thu được giá trị dự đoán cho từng quan sát trong ma trận đầu vào X.
-
-\subsubsection{Hàm numpy.mean}
+ 
+\subsubsection{Hàm numpy.mean} \label{mean}
 \noindent
 \textbf{Input:} Mảng NumPy cần tính trung bình, cột cần tính trung bình \\
 \textbf{Output:} Hàm này trả về kết quả là trung bình của các phần tử trong mảng đầu vào theo các tham số đã xác định. Hàm có thể xử lý các mảng có kích thước và chiều khác nhau, và có thể thực hiện broadcasting nếu các kích thước tương thích.
@@ -301,9 +301,7 @@ Tham số \textit{shuffle} được sử dụng để chỉ định cách chia d
 
 Đến với tham số \textit{random\_state}, nếu \textit{random\_state=None}, thì mỗi lần chạy hàm \textit{KFold} sẽ cho ra kết quả khác nhau. Trên thực tế, việc truyền bất kì số nguyên nào (kể cả số 0) thì cũng không thành vấn đề. Đây là một random seed trong thuật toán random của máy tính. \cite{wikipediaRandomSeed} Các thí nghiệm có cùng random seed và cùng các tham số khác sẽ cho ra kết quả giống nhau. 42 là một con số đến từ cuốn sách Hướng dẫn du lịch vũ trụ. Câu trả lời cho cuộc sống vũ trụ và mọi thứ và được coi là một trò đùa. Nó không có ý nghĩa khác ngoài việc là một con số ngẫu nhiên. \cite{stackoverflowRandomState} Trong đồ án này, ta sử dụng \textit{random\_state=42} để đảm bảo kết quả của các thí nghiệm là nhất quán.
 
-Thư viện sklearn là một trong những thư viện học máy phổ biến nhất cho Python. Nó bao gồm nhiều thuật toán và công cụ cho các bài toán học có giám sát, học không giám sát, tiền xử lý dữ liệu, lựa chọn mô hình và đánh giá mô hình. Thư viện này được viết bằng Python và sử dụng các thư viện khoa học khác như NumPy, SciPy và matplotlib. Nó cũng tương thích với nhiều thư viện khác cho phép làm việc với dữ liệu và trực quan hóa dữ liệu, ví dụ như Pandas và Seaborn. \cite{datagyIntroductionScikitLearn}
-
-Trong đoạn code này, chúng ta sử dụng lớp KFold của thư viện sklearn để tạo ra một đối tượng chia dữ liệu. Việc chia dữ liệu thành k phần giúp chúng ta có thể kiểm tra độ chính xác và ổn định của mô hình trên nhiều tập dữ liệu khác nhau, tránh hiện tượng quá khớp (overfitting) hoặc thiếu khớp (underfitting) mô hình.
+Việc chia dữ liệu thành k phần giúp chúng ta có thể kiểm tra độ chính xác và ổn định của mô hình trên nhiều tập dữ liệu khác nhau, tránh hiện tượng quá khớp (overfitting) hoặc thiếu khớp (underfitting) mô hình. Việc lựa chọn giá trị k trong k-fold cross validation là tùy thuộc vào nhiều yếu tố. Một giá trị k lớn sẽ cho phép mô hình được huấn luyện trên nhiều dữ liệu hơn, nhưng cũng sẽ tăng thời gian tính toán. Một giá trị k nhỏ sẽ giảm thời gian tính toán, nhưng cũng có thể làm tăng sai số trong việc đánh giá hiệu suất của mô hình. \cite{stackexchangeChoiceKfold}
 
 % IPython
 \subsubsection{Hàm IPython.display.Latex}
@@ -327,7 +325,7 @@ Mục đích hàm fit của lớp OLSLinearRegression là tìm ra ma trận tr�
 \textbf{Input:} Ma trận chứa các giá trị của đặc trưng. \\
 \textbf{Output:} Mảng NumPy chứa các giá trị dự đoán.
 \paragraph{Mô tả:} 
-Trong hàm \textit{predict}, ta tính toán giá trị dự đoán bằng cách nhân ma trận X với vector trọng số w (được tính toán trong hàm \ref{fit}) và cộng các giá trị lại với nhau theo chiều thứ nhất (axis=1) để thu được một vector kết quả. Cụ thể, ta sử dụng phép toán \textcolor{red}{\textit{np.sum(self.w.ravel() * X, axis=1)}} để thực hiện việc này.
+Trong hàm \textit{predict}, ta tính toán giá trị dự đoán bằng cách nhân ma trận X với vector trọng số w (được tính toán trong hàm \hyperref{fit}{fit}) và cộng các giá trị lại với nhau theo chiều thứ nhất (axis=1) để thu được một vector kết quả. Cụ thể, ta sử dụng phép toán \textcolor{red}{\textit{np.sum(self.w.ravel() * X, axis=1)}} để thực hiện việc này.
 
 Sở dĩ ta phải gọi hàm \textit{ravel} được sử dụng để chuyển đổi vector trọng số \textit{w} thành một mảng 1 chiều liên tục trước khi thực hiện phép nhân với ma trận đầu vào \textit{X}. Điều này cần thiết để đảm bảo rằng kích thước của \textit{w} và \textit{X} phù hợp với nhau và phép nhân. Trái lại, nếu không sử dụng hàm \textit{ravel}, vector trọng số \textit{w} có kích thước không phù hợp và dẫn đến lỗi khi thực hiện phép nhân.
 
@@ -340,12 +338,67 @@ Sở dĩ ta phải gọi hàm \textit{ravel} được sử dụng để chuyển
 Hàm \textit{get\_params} được sử dụng để trả về các giá trị của vector trọng số \textit{w}. Mô hình OLSLinearRegression sau khi được huấn luyện sẽ có một vector trọng số \textit{w} duy nhất, và hàm \textit{get\_params} được sử dụng để trả về các giá trị của vector trọng số này.
 
 \subsubsection{Hàm mae} \label{mae}
+\noindent
+\textbf{Input:} Vector chứa các giá trị thực tế từ tập dữ liệu cho trước, vector chứa các giá trị dự đoán tính được từ mô hình. \\
+\textbf{Output:} Giá trị lỗi trung bình tuyệt đối (MAE).
+\paragraph{Mô tả:}
+
+Phương pháp bình phương tối thiểu khi sử dụng để tìm mô hình tuyến tính sẽ tìm ra mô hình có giá trị trung bình của tổng bình phương sai số là nhỏ nhất.  Tuy nhiên, trong thực tế, chúng ta thường quan tâm đến giá trị trung bình của tổng sai số tuyệt đối, hay còn gọi là lỗi trung bình tuyệt đối (MAE). MAE được tính bằng cách lấy giá trị tuyệt đối của sự khác biệt giữa các giá trị thực tế và giá trị dự đoán, sau đó lấy giá trị trung bình của các sự khác biệt tuyệt đối này.
+
+Trong hàm mae, ta sử dụng hàm \textit{numpy.ravel} để làm phẳng các mảng đầu vào y và y\_hat thành các mảng 1 chiều. Điều này cho phép tính toán trực tiếp sự khác biệt tuyệt đối giữa các phần tử tương ứng của hai mảng bằng cách trừ chúng và lấy giá trị tuyệt đối. Sau đó, giá trị trung bình của các sự khác biệt tuyệt đối được tính toán bằng hàm \textit{numpy.mean} để trả về giá trị lỗi trung bình tuyệt đối (MAE) giữa hai mảng.
+
 \subsubsection{Hàm latex\_text}
+\noindent
+\textbf{Input:} Mảng NumPy chứa các tham số của mô hình tuyến tính, từ điển chứa các tên cột tương ứng với các tham số trong mảng NumPy. \\
+\textbf{Output:} Hiển thị chuỗi kí tự ở dạng \LaTeX.
+\paragraph{Mô tả:}
+
+Hàm latex\_text có hai đầu vào là params và dict. Đầu vào params là một mảng numpy chứa các tham số của mô hình tuyến tính, trong khi đầu vào dict là một từ điển chứa các tên cột tương ứng với các tham số trong params. Hàm này trả về một chuỗi LaTeX biểu diễn phương trình tuyến tính của mô hình dựa trên các tham số và tên cột được cung cấp.
+
+Trong hàm này, ta bắt đầu bằng cách khởi tạo chuỗi text với giá trị ban đầu là phần đầu của phương trình LaTeX: Hàm latex\_text có hai đầu vào là params và dict. Đầu vào params là một mảng numpy chứa các tham số của mô hình tuyến tính, trong khi đầu vào dict là một từ điển chứa các tên cột tương ứng với các tham số trong params. Hàm này trả về một chuỗi LaTeX biểu diễn phương trình tuyến tính của mô hình dựa trên các tham số và tên cột được cung cấp.
+
 \subsubsection{Hàm kfold\_cross\_model}
+\noindent
+\textbf{Input:} Mảng NumPy chứa các giá trị của đặc trưng, mảng NumPy chứa các giá trị của biến mục tiêu, đối tượng KFold, mảng để lưu trữ các giá trị MAE. \\
+\textbf{Output:} Không có.
+\paragraph{Mô tả:}
+
+Trong hàm này, ta sử dụng vòng lặp để duyệt qua các phần chia của dữ liệu huấn luyện khi thực hiện phương pháp kfold cross validation. Mỗi phần tử của iterator là một tuple chứa hai mảng chỉ số: \textit{train\_index} và \textit{test\_index}. Mảng \textit{train\_index} chứa các chỉ số của phần huấn luyện, trong khi mảng \textit{test\_index} chứa các chỉ số của phần kiểm tra1.
+
+Vòng lặp \textcolor{red}{\textit{for train\_index, test\_index in kf.split(X\_train\_np)}} được sử dụng để duyệt qua các phần chia của dữ liệu huấn luyện. Đối với mỗi phần chia, ta sử dụng chỉ số của phần huấn luyện và phần kiểm tra để trích xuất dữ liệu tương ứng từ X\_train\_np và y\_train\_np. Sau đó, ta có thể huấn luyện mô hình với dữ liệu huấn luyện đã trích xuất và đánh giá hiệu suất của mô hình trên dữ liệu kiểm tra. Cuối cùng, ta thêm giá trị MAE vào danh sách mae\_arr để lưu trữ kết quả. Nếu X\_train\_np là một vector 1 chiều, ta thêm một chiều mới vào cuối bằng cách sử dụng cú pháp [:, None]. Ngược lại, ta chỉ cần trích xuất dữ liệu bình thường. Sau đó, ta huấn luyện một mô hình hồi quy tuyến tính bằng cách sử dụng phương thức fit của class OLSLinearRegression với dữ liệu huấn luyện đã trích xuất. Ta sử dụng mô hình đã huấn luyện để dự đoán giá trị đầu ra cho phần kiểm tra của dữ liệu và tính toán giá trị MAE giữa giá trị thực tế và giá trị dự đoán. Cuối cùng, ta thêm giá trị MAE vào danh sách mae\_arr để lưu trữ kết quả.
+
+Hàm này không có giá trị trả về, nhưng nó thay đổi nội dung của danh sách mae\_arr bằng cách thêm các giá trị MAE tính toán được trong quá trình kiểm định chéo.
+
 \subsubsection{Hàm scientific\_notation\_converter}
+\noindent
+\textbf{Input:} Mảng chứa các trọng số của mô hình tuyến tính. \\
+\textbf{Output:} Mảng chứa các trọng số của mô hình tuyến tính ở dạng ký hiệu khoa học với 3 chữ số thập phân.
+\paragraph{Mô tả:}
+
+Trong đồ án yêu cầu ta phải trình bày mô hình dự đoán mức lương với tham số được làm tròn 3 chữ số thập phân. Ta có thể sử dụng hàm \textit{round} trong phương thức \textit{get\_params}. Song nếu làm tròn ngay từ bước huấn luyện, ta sẽ mất đi độ chính xác của mô hình. Do đó, ta sẽ sử dụng hàm \textit{scientific\_notation\_converter} để chuyển đổi các trọng số của mô hình.
+
+Trong hàm này, ta sử dụng kỹ thuật list comprehension để duyệt qua các phần tử trong params và chuyển đổi chúng thành dạng ký hiệu khoa học (scientific notation). Đối với mỗi phần tử x trong params, ta chuyển đổi nó thành số thực bằng cách sử dụng hàm float(x), sau đó định dạng nó thành chuỗi ký hiệu khoa học với 3 chữ số thập phân bằng cách sử dụng phương thức format: \textit{"\{:.3f\}".format(float(x))}. Kết quả cuối cùng là một danh sách mới chứa các chuỗi ký hiệu khoa học tương ứng với các phần tử trong params.
 
 \section{Đánh giá kết quả mô hình}
+% \subsubsection{Các bước thực hiện}
+% \subsubsection{Công thức hồi quy}
+% \subsubsection{Kết quả mô hình}
+% \subsubsection{Nhận xét}
+
+Trước khi thực hiện tìm mô hình hồi quy tuyến tính cho tất cả yêu cầu đề bài, ta cần đọc dữ liệu từ \textit{train.csv} và \textit{test.csv} ứng với tập dữ liệu huấn luyện (\textbf{train}) và tập dữ liệu kiểm tra (\textbf{test}), đồng thời xử lý DataFrame vừa đọc được để nhận biết đâu là tập các đặc trưng (\textbf{X}) và đâu là tập biến mục tiêu (\textbf{y}). Sau đó, ta sẽ chia tập dữ liệu huấn luyện thành hai phần: tập huấn luyện (\textbf{X\_train}, \textbf{y\_train}) và tập kiểm tra (\textbf{X\_test}, \textbf{y\_test}). Do tập mục tiêu là cố định (Salary ứng với \textbf{y\_train} và \textbf{y\_test}), nên ta dùng chung hai tập này cho các câu 1a, 1b, 1c, 1d. 
+
+Sở dĩ phải chuyển về NumPy array với tất cả DataFrame vừa đọc được là vì khi thực hiện yêu cầu tìm đặc trưng tốt nhất trong số các đặc trưng (yêu cầu 1b, 1c), ma trận đặc trưng \textit{X} chỉ có 1 cột, nên khi thực hiện các phép toán trên ma trận, ta cần mở rộng 1 chiều mới 
+
 \subsection{Yêu cầu 1a}
+\subsubsection{Các bước thực hiện}
+\begin{enumerate}
+  \item Thực hiện lấy 11 đặc trưng đầu tiên đề bài cung cấp.
+  \item Thực hiện chia tập dữ liệu huấn luyện thành hai phần: tập huấn luyện (\textbf{X\_1a\_train}, \textbf{y\_train}) và tập kiểm tra (\textbf{X\_test}, \textbf{y\_test}).
+  \item 
+\end{enumerate}
+\subsubsection{Công thức hồi quy}
+\subsubsection{Kết quả mô hình}
+\subsubsection{Nhận xét}
 
 \subsection{Yêu cầu 1b}
 
