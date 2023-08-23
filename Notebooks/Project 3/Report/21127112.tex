@@ -233,21 +233,112 @@ Trong bài toán hồi quy tuyến tính, chúng ta cần tìm một ma trận t
 Hàm \textit{numpy.ravel} cũng được sử dụng trong hàm mae \ref{mae} để làm phẳng các mảng đầu vào y và y\_hat thành các mảng 1 chiều. Điều này cho phép tính toán trực tiếp sự khác biệt tuyệt đối giữa các phần tử tương ứng của hai mảng bằng cách trừ chúng và lấy giá trị tuyệt đối. Sau đó, giá trị trung bình của các sự khác biệt tuyệt đối được tính toán bằng hàm \textit{numpy.mean} để trả về giá trị lỗi trung bình tuyệt đối (MAE) giữa hai mảng.
 
 \subsubsection{Hàm numpy.sum}
+\noindent
+\textbf{Input:} Mảng NumPy cần tính tổng, cột cần tính tổng \\
+\textbf{Output:} Hàm này trả về kết quả là tổng của các phần tử trong mảng đầu vào theo các tham số đã xác định. Hàm có thể xử lý các mảng có kích thước và chiều khác nhau, và có thể thực hiện broadcasting nếu các kích thước tương thích.
+\paragraph{Mô tả:}
+
+Hàm \textit{numpy.sum} \cite{numpyNumpysum} được sử dụng để tính tổng các phần tử trong mảng. Trong đồ án này, hàm này được sử dụng để tính tổng các phần tử trong mảng đầu vào X bằng cách nhân từng phần tử tương ứng của vector trọng số và ma trận đầu vào X và cộng lại. Cuối cùng ta thu được giá trị dự đoán cho từng quan sát trong ma trận đầu vào X.
+
 \subsubsection{Hàm numpy.mean}
+\noindent
+\textbf{Input:} Mảng NumPy cần tính trung bình, cột cần tính trung bình \\
+\textbf{Output:} Hàm này trả về kết quả là trung bình của các phần tử trong mảng đầu vào theo các tham số đã xác định. Hàm có thể xử lý các mảng có kích thước và chiều khác nhau, và có thể thực hiện broadcasting nếu các kích thước tương thích.
+\paragraph{Mô tả:}
+Hàm \textit{numpy.mean} \cite{numpyNumpymean} được sử dụng để tính giá trị trung bình của các phần tử trong mảng. Trong đồ án này, hàm này được sử dụng để tính giá trị trung bình của các sự khác biệt tuyệt đối giữa các phần tử tương ứng của hai mảng bằng cách trừ chúng và lấy giá trị tuyệt đối. Sau đó, giá trị trung bình của các sự khác biệt tuyệt đối được tính toán bằng hàm \textit{numpy.mean} để trả về giá trị lỗi trung bình tuyệt đối (MAE) giữa hai mảng.
+
 \subsubsection{Hàm numpy.triu}
+\noindent
+\textbf{Input:} Mảng NumPy cần tìm ma trận tam giác trên, kích thước của ma trận tam giác trên \\
+\textbf{Output:} Mảng NumPy chứa ma trận tam giác trên của mảng đầu vào.
+\paragraph{Mô tả:}
+Hàm này trả về một bản sao của mảng đầu vào với các phần tử dưới đường chéo thứ k bị đưa về 0. Đối với các mảng có số chiều lớn hơn 2, triu sẽ áp dụng cho hai trục cuối cùng \cite{numpyNumpytriu}.
+
 \subsubsection{Hàm numpy.where}
+\noindent
+\textbf{Input:} Mảng NumPy cần tìm vị trí, giá trị cần tìm vị trí \\
+\textbf{Output:} Mảng NumPy chứa các vị trí của giá trị cần tìm.
+\paragraph{Mô tả:}
+
+Hàm \textit{numpy.where} \cite{numpyNumpywhere} được sử dụng để lọc các phần tử của một mảng dựa trên một điều kiện cho trước. Cụ thể hơn, \textcolor{red}{\textit{np.triu(np.ones(corr\_matrix.shape), k=1).astype(bool)}} sẽ tạo ra một mảng có cùng kích thước với corr\_matrix, trong đó các phần tử nằm trên đường chéo chính (k=1) sẽ có giá trị là True, còn các phần tử còn lại có giá trị là False.
+
+Sau đó, mảng này được sử dụng như một mặt nạ để lọc các phần tử của corr\_matrix bằng cách sử dụng phương thức where. Kết quả cuối cùng là một mảng mới chỉ chứa các phần tử nằm trên đường chéo chính của corr\_matrix, còn các phần tử còn lại sẽ bị loại bỏ (có giá trị là NaN).
+
+Nói cách khác, đoạn code trên lọc ra ma trận tam giác trên của ma trận tương quan corr\_matrix, loại bỏ các phần tử nằm dưới đường chéo chính và giữ lại các phần tử nằm trên đường chéo chính.
+
 \subsubsection{Hàm numpy.ones}
+\noindent
+\textbf{Input:} Kích thước của mảng, kiểu dữ liệu của mảng \\
+\textbf{Output:} Mảng NumPy chứa các phần tử có giá trị là 1.
+\paragraph{Mô tả:}
+
+Hàm \textit{numpy.ones} \cite{numpyNumpyones} được sử dụng để tạo ra một mảng có kích thước và kiểu dữ liệu nhất định, trong đó các phần tử có giá trị là 1.
+
 % Seaborn
 \subsubsection{Hàm seaborn.heatmap}
+\noindent
+\textbf{Input:} Ma trận tương quan, các tham số để tùy chỉnh cách vẽ heatmap. \\
+\textbf{Output:} Biểu đồ heatmap.
+\paragraph{Mô tả:}
+
+Hàm \textit{seaborn.heatmap} \cite{pydataSeabornheatmap} được sử dụng để vẽ heatmap từ các đối tượng DataFrame hoặc numpy array, cũng như điều chỉnh các thuộc tính như bản đồ màu, khoảng giá trị, nhãn và tiêu đề. Heatmap là thành phần không thể thiếu để tìm hiểu mối quan hệ giữa các biến trong bộ dữ liệu và là tiền đề để thực hiện tìm mô hình cho yêu cầu 1d.
+
+Tham số \textit{annot} trong hàm \textit{sns.heatmap} được sử dụng để kiểm soát việc hiển thị giá trị của các ô trong biểu đồ heatmap. Nếu \textit{annot=True}, thì giá trị của mỗi ô sẽ được hiển thị bên trong ô đó.
+
+Biểu đồ heatmap với ma trận tương quan \text{corr\_matrix}, sử dụng bản đồ màu plasma, và hiển thị giá trị của mỗi ô bên trong ô đó. Nếu tham số này là False, thì giá trị của mỗi ô sẽ không được hiển thị bên trong ô đó, chỉ hiển thị các màu tương ứng với giá trị của ô đó.
+
 % Sklearn
 \subsubsection{Hàm sklearn.model\_selection.KFold}
+\noindent
+\textbf{Input:} Số lượng fold, các tham số để tùy chỉnh cách chia dữ liệu. \\
+\textbf{Output:} Các chỉ số để chia dữ liệu thành các fold.
+\paragraph{Mô tả:} 
+Chiến lược phổ biến nhất trong học máy là chia tập dữ liệu thành tập huấn luyện và tập kiểm tra. Tỷ lệ chia có thể là 70:30 hoặc 80:20 \cite{r1}. Một trong số những phương pháp là sử dụng k-fold Cross Validation. \cite{mediumCrossValidationUsing}
+
+Trong đồ án này, hàm \textit{sklearn.model\_selection.KFold} \cite{scikitlearnSklearnmodel} được sử dụng để chia dữ liệu thành các fold. Hàm này có thể nhận thêm các tham số để tùy chỉnh cách chia dữ liệu, nhưng trong đồ án này ta giữ nguyên các tham số khác xem như mặc định, chỉ tùy chỉnh số lượng fold, kiểu chia dữ liệu và trộn dữ liệu trước khi chia (lần lượt các tham số \textit{n\_splits}, \textit{shuffle} và \textit{random\_state}). Tham số \textit{n\_splits} được sử dụng để chỉ định số lượng fold (k = 20 với các yêu cầu 1b, 1c, 1d), tham số \textit{shuffle} được sử dụng để chỉ định cách chia dữ liệu, và tham số \textit{random\_state} được sử dụng để chỉ định cách trộn dữ liệu trước khi chia.
+
+Tham số \textit{shuffle} được sử dụng để chỉ định cách chia dữ liệu. Nếu \textit{shuffle=True}, thì dữ liệu sẽ được trộn ngẫu nhiên trước khi chia. Nếu \textit{shuffle=False}, thì dữ liệu sẽ không được trộn ngẫu nhiên trước khi chia. Trong đồ án này, ta sử dụng \textit{shuffle=True} để trộn dữ liệu ngẫu nhiên trước khi chia.
+
+Đến với tham số \textit{random\_state}, nếu \textit{random\_state=None}, thì mỗi lần chạy hàm \textit{KFold} sẽ cho ra kết quả khác nhau. Trên thực tế, việc truyền bất kì số nguyên nào (kể cả số 0) thì cũng không thành vấn đề. Đây là một random seed trong thuật toán random của máy tính. \cite{wikipediaRandomSeed} Các thí nghiệm có cùng random seed và cùng các tham số khác sẽ cho ra kết quả giống nhau. 42 là một con số đến từ cuốn sách Hướng dẫn du lịch vũ trụ. Câu trả lời cho cuộc sống vũ trụ và mọi thứ và được coi là một trò đùa. Nó không có ý nghĩa khác ngoài việc là một con số ngẫu nhiên. \cite{stackoverflowRandomState} Trong đồ án này, ta sử dụng \textit{random\_state=42} để đảm bảo kết quả của các thí nghiệm là nhất quán.
+
+Thư viện sklearn là một trong những thư viện học máy phổ biến nhất cho Python. Nó bao gồm nhiều thuật toán và công cụ cho các bài toán học có giám sát, học không giám sát, tiền xử lý dữ liệu, lựa chọn mô hình và đánh giá mô hình. Thư viện này được viết bằng Python và sử dụng các thư viện khoa học khác như NumPy, SciPy và matplotlib. Nó cũng tương thích với nhiều thư viện khác cho phép làm việc với dữ liệu và trực quan hóa dữ liệu, ví dụ như Pandas và Seaborn. \cite{datagyIntroductionScikitLearn}
+
+Trong đoạn code này, chúng ta sử dụng lớp KFold của thư viện sklearn để tạo ra một đối tượng chia dữ liệu. Việc chia dữ liệu thành k phần giúp chúng ta có thể kiểm tra độ chính xác và ổn định của mô hình trên nhiều tập dữ liệu khác nhau, tránh hiện tượng quá khớp (overfitting) hoặc thiếu khớp (underfitting) mô hình.
+
 % IPython
 \subsubsection{Hàm IPython.display.Latex}
+\noindent
+\textbf{Input:} Chuỗi kí tự cần hiển thị ở dạng \LaTeX. \\
+\textbf{Output:} Hiển thị chuỗi kí tự ở dạng \LaTeX.
 
 \subsection{Hàm tự cài đặt}
-\subsubsection{Hàm OLSLinearRegression.fit}
+\subsubsection{Hàm OLSLinearRegression.fit} \label{fit}
+\noindent
+\textbf{Input:} Ma trận chứa các giá trị của đặc trưng, y là một vector chứa các giá trị của biến mục tiêu. \\
+\textbf{Output:} Chính nó (self) để có thể gọi phương thức khác trên cùng đối tượng OLSLinearRegression.
+\paragraph{Mô tả:}
+
+Hàm này sử dụng phương pháp bình phương nhỏ nhất để tính toán trọng số \textit{w} cho mô hình tuyến tính. Đầu tiên, nó tính toán ma trận giả nghịch đảo của ma trận $\text{A}^\text{T} \text{A}$ bằng hàm \textit{numpy.linalg.inv} (thay vì tự cài đặt để tối ưu hoá thời gian tính toán). 
+
+Mục đích hàm fit của lớp OLSLinearRegression là tìm ra ma trận trọng số \textit{w} ứng với mô hình tuyến tính. Để làm được điều này, ta cần giải hệ phương trình tuyến tính $\text{A}^\text{T} \text{A} \textit{w} = \text{A}^\text{T} \text{b}$ để tìm ra giá trị của \textit{w}. Để giải hệ phương trình này, ta nhân cả hai vế của phương trình với ma trận nghịch đảo của ma trận $\text{A}^\text{T} \text{A}$, ta được $\textit{w} = (\text{A}^\text{T} \text{A})^{-1} \text{A}^\text{T} \text{b}$. Do đó, ta sẽ tính ma trận nghịch đảo của ma trận $\text{A}^\text{T} \text{A}$ bằng hàm \textit{numpy.linalg.inv} và nhân với ma trận $\text{A}^\text{T} \text{b}$ để tìm ra giá trị của \textit{w}.
+
 \subsubsection{Hàm OLSLinearRegression.predict}
+\noindent
+\textbf{Input:} Ma trận chứa các giá trị của đặc trưng. \\
+\textbf{Output:} Mảng NumPy chứa các giá trị dự đoán.
+\paragraph{Mô tả:} 
+Trong hàm \textit{predict}, ta tính toán giá trị dự đoán bằng cách nhân ma trận X với vector trọng số w (được tính toán trong hàm \ref{fit}) và cộng các giá trị lại với nhau theo chiều thứ nhất (axis=1) để thu được một vector kết quả. Cụ thể, ta sử dụng phép toán \textcolor{red}{\textit{np.sum(self.w.ravel() * X, axis=1)}} để thực hiện việc này.
+
+Sở dĩ ta phải gọi hàm \textit{ravel} được sử dụng để chuyển đổi vector trọng số \textit{w} thành một mảng 1 chiều liên tục trước khi thực hiện phép nhân với ma trận đầu vào \textit{X}. Điều này cần thiết để đảm bảo rằng kích thước của \textit{w} và \textit{X} phù hợp với nhau và phép nhân. Trái lại, nếu không sử dụng hàm \textit{ravel}, vector trọng số \textit{w} có kích thước không phù hợp và dẫn đến lỗi khi thực hiện phép nhân.
+
 \subsubsection{Hàm OLSLinearRegression.get\_params}
+\noindent
+\textbf{Input:} Không có. \\
+\textbf{Output:} Mảng NumPy chứa các giá trị của vector trọng số \textit{w}.
+\paragraph{Mô tả:}
+
+Hàm \textit{get\_params} được sử dụng để trả về các giá trị của vector trọng số \textit{w}. Mô hình OLSLinearRegression sau khi được huấn luyện sẽ có một vector trọng số \textit{w} duy nhất, và hàm \textit{get\_params} được sử dụng để trả về các giá trị của vector trọng số này.
+
 \subsubsection{Hàm mae} \label{mae}
 \subsubsection{Hàm latex\_text}
 \subsubsection{Hàm kfold\_cross\_model}
