@@ -288,18 +288,18 @@ Tham số \textit{annot} trong hàm \textit{sns.heatmap} được sử dụng đ
 Biểu đồ heatmap với ma trận tương quan \text{corr\_matrix}, sử dụng bản đồ màu plasma, và hiển thị giá trị của mỗi ô bên trong ô đó. Nếu tham số này là False, thì giá trị của mỗi ô sẽ không được hiển thị bên trong ô đó, chỉ hiển thị các màu tương ứng với giá trị của ô đó.
 
 % Sklearn
-\subsubsection{Hàm sklearn.model\_selection.KFold}
+\subsubsection{Lớp sklearn.model\_selection.KFold}
 \noindent
-\textbf{Input:} Số lượng fold, các tham số để tùy chỉnh cách chia dữ liệu. \\
-\textbf{Output:} Các chỉ số để chia dữ liệu thành các fold.
+\textbf{Input:} Các tham số để tùy chỉnh cách chia dữ liệu. \\
+\textbf{Output:} Đối tượng KFold chứa các chỉ số để chia dữ liệu thành các tập huấn luyện và kiểm tra.
 \paragraph{Mô tả:} 
 Chiến lược phổ biến nhất trong học máy là chia tập dữ liệu thành tập huấn luyện và tập kiểm tra. Tỷ lệ chia có thể là 70:30 hoặc 80:20 \cite{r1}. Một trong số những phương pháp là sử dụng k-fold Cross Validation. \cite{mediumCrossValidationUsing}
 
-Trong đồ án này, hàm \textit{sklearn.model\_selection.KFold} \cite{scikitlearnSklearnmodel} được sử dụng để chia dữ liệu thành các fold. Hàm này có thể nhận thêm các tham số để tùy chỉnh cách chia dữ liệu, nhưng trong đồ án này ta giữ nguyên các tham số khác xem như mặc định, chỉ tùy chỉnh số lượng fold, kiểu chia dữ liệu và trộn dữ liệu trước khi chia (lần lượt các tham số \textit{n\_splits}, \textit{shuffle} và \textit{random\_state}). Tham số \textit{n\_splits} được sử dụng để chỉ định số lượng fold (k = 20 với các yêu cầu 1b, 1c, 1d), tham số \textit{shuffle} được sử dụng để chỉ định cách chia dữ liệu, và tham số \textit{random\_state} được sử dụng để chỉ định cách trộn dữ liệu trước khi chia.
+Trong đồ án này, lớp \textit{sklearn.model\_selection.KFold} \cite{scikitlearnSklearnmodel} được sử dụng để chia dữ liệu thành các fold. Nó có thể nhận thêm các tham số để tùy chỉnh cách chia dữ liệu, nhưng trong đồ án này ta giữ nguyên các tham số khác xem như mặc định, chỉ tùy chỉnh số lượng fold, kiểu chia dữ liệu và trộn dữ liệu trước khi chia (lần lượt các tham số \textit{n\_splits}, \textit{shuffle} và \textit{random\_state}). Tham số \textit{n\_splits} được sử dụng để chỉ định số lượng fold (k = 20 với các yêu cầu 1b, 1c, 1d), tham số \textit{shuffle} được sử dụng để chỉ định cách chia dữ liệu, và tham số \textit{random\_state} được sử dụng để chỉ định cách trộn dữ liệu trước khi chia.
 
 Tham số \textit{shuffle} được sử dụng để chỉ định cách chia dữ liệu. Nếu \textit{shuffle=True}, thì dữ liệu sẽ được trộn ngẫu nhiên trước khi chia. Nếu \textit{shuffle=False}, thì dữ liệu sẽ không được trộn ngẫu nhiên trước khi chia. Trong đồ án này, ta sử dụng \textit{shuffle=True} để trộn dữ liệu ngẫu nhiên trước khi chia.
 
-Đến với tham số \textit{random\_state}, nếu \textit{random\_state=None}, thì mỗi lần chạy hàm \textit{KFold} sẽ cho ra kết quả khác nhau. Trên thực tế, việc truyền bất kì số nguyên nào (kể cả số 0) thì cũng không thành vấn đề. Đây là một random seed trong thuật toán random của máy tính. \cite{wikipediaRandomSeed} Các thí nghiệm có cùng random seed và cùng các tham số khác sẽ cho ra kết quả giống nhau. 42 là một con số đến từ cuốn sách Hướng dẫn du lịch vũ trụ. Câu trả lời cho cuộc sống vũ trụ và mọi thứ và được coi là một trò đùa. Nó không có ý nghĩa khác ngoài việc là một con số ngẫu nhiên. \cite{stackoverflowRandomState} Trong đồ án này, ta sử dụng \textit{random\_state=42} để đảm bảo kết quả của các thí nghiệm là nhất quán.
+Đến với tham số \textit{random\_state}, nếu \textit{random\_state=None}, thì mỗi lần chạy, lớp \textit{KFold} sẽ cho ra kết quả khác nhau. Trên thực tế, việc truyền bất kì số nguyên nào (kể cả số 0) thì cũng không thành vấn đề. Đây là một random seed trong thuật toán random của máy tính. \cite{wikipediaRandomSeed} Các thí nghiệm có cùng random seed và cùng các tham số khác sẽ cho ra kết quả giống nhau. 42 là một con số đến từ cuốn sách Hướng dẫn du lịch vũ trụ. Câu trả lời cho cuộc sống vũ trụ và mọi thứ và được coi là một trò đùa. Nó không có ý nghĩa khác ngoài việc là một con số ngẫu nhiên. \cite{stackoverflowRandomState} Trong đồ án này, ta sử dụng \textit{random\_state=42} để đảm bảo kết quả của các thí nghiệm là nhất quán.
 
 Việc chia dữ liệu thành k phần giúp chúng ta có thể kiểm tra độ chính xác và ổn định của mô hình trên nhiều tập dữ liệu khác nhau, tránh hiện tượng quá khớp (overfitting) hoặc thiếu khớp (underfitting) mô hình. Việc lựa chọn giá trị k trong k-fold cross validation là tùy thuộc vào nhiều yếu tố. Một giá trị k lớn sẽ cho phép mô hình được huấn luyện trên nhiều dữ liệu hơn, nhưng cũng sẽ tăng thời gian tính toán. Một giá trị k nhỏ sẽ giảm thời gian tính toán, nhưng cũng có thể làm tăng sai số trong việc đánh giá hiệu suất của mô hình. \cite{stackexchangeChoiceKfold}
 
@@ -357,7 +357,9 @@ Hàm latex\_text có hai đầu vào là params và dict. Đầu vào params là
 
 Trong hàm này, ta bắt đầu bằng cách khởi tạo chuỗi text với giá trị ban đầu là phần đầu của phương trình LaTeX: Hàm latex\_text có hai đầu vào là params và dict. Đầu vào params là một mảng numpy chứa các tham số của mô hình tuyến tính, trong khi đầu vào dict là một từ điển chứa các tên cột tương ứng với các tham số trong params. Hàm này trả về một chuỗi LaTeX biểu diễn phương trình tuyến tính của mô hình dựa trên các tham số và tên cột được cung cấp.
 
-\subsubsection{Hàm kfold\_cross\_model}
+Do \LaTeX \space trên Jupyter Notebook không tự xuống dòng khi độ dài của một chuỗi vượt quá chiều rộng của trang, ta sẽ thêm đoạn mã xuống dòng mỗi 4 tên cột được hiển thị (không tính cột đầu tiên).
+
+\subsubsection{Hàm kfold\_cross\_model} \label{kfoldcrossmodel}
 \noindent
 \textbf{Input:} Mảng NumPy chứa các giá trị của đặc trưng, mảng NumPy chứa các giá trị của biến mục tiêu, đối tượng KFold, mảng để lưu trữ các giá trị MAE. \\
 \textbf{Output:} Không có.
@@ -377,32 +379,154 @@ Hàm này không có giá trị trả về, nhưng nó thay đổi nội dung c�
 
 Trong đồ án yêu cầu ta phải trình bày mô hình dự đoán mức lương với tham số được làm tròn 3 chữ số thập phân. Ta có thể sử dụng hàm \textit{round} trong phương thức \textit{get\_params}. Song nếu làm tròn ngay từ bước huấn luyện, ta sẽ mất đi độ chính xác của mô hình. Do đó, ta sẽ sử dụng hàm \textit{scientific\_notation\_converter} để chuyển đổi các trọng số của mô hình.
 
-Trong hàm này, ta sử dụng kỹ thuật list comprehension để duyệt qua các phần tử trong params và chuyển đổi chúng thành dạng ký hiệu khoa học (scientific notation). Đối với mỗi phần tử x trong params, ta chuyển đổi nó thành số thực bằng cách sử dụng hàm float(x), sau đó định dạng nó thành chuỗi ký hiệu khoa học với 3 chữ số thập phân bằng cách sử dụng phương thức format: \textit{"\{:.3f\}".format(float(x))}. Kết quả cuối cùng là một danh sách mới chứa các chuỗi ký hiệu khoa học tương ứng với các phần tử trong params.
+Trong hàm này, ta sử dụng kỹ thuật list comprehension để duyệt qua các phần tử trong params và chuyển đổi chúng thành dạng ký hiệu khoa học (scientific notation). Đối với mỗi phần tử \textit{param} trong params, sau đó định dạng nó thành chuỗi ký hiệu khoa học với 3 chữ số thập phân bằng cách sử dụng phương thức format: \textit{''\%.3f''}. Kết quả cuối cùng là một danh sách mới chứa các chuỗi ký hiệu khoa học tương ứng với các phần tử trong params.
 
 \section{Đánh giá kết quả mô hình}
+\subsection{Thông tin cấu hình}
+\begin{itemize}
+  \item Bộ xử lý: AMD Ryzen 7 5800H
+  \item Hệ điều hành: Windows 10 Pro 64-bit
+  \item Phiên bản Python: 3.10.9
+\end{itemize}
+% % Template yêu cầu
 % \subsubsection{Các bước thực hiện}
 % \subsubsection{Công thức hồi quy}
 % \subsubsection{Kết quả mô hình}
 % \subsubsection{Nhận xét}
-
+\subsection{Ghi chú}
 Trước khi thực hiện tìm mô hình hồi quy tuyến tính cho tất cả yêu cầu đề bài, ta cần đọc dữ liệu từ \textit{train.csv} và \textit{test.csv} ứng với tập dữ liệu huấn luyện (\textbf{train}) và tập dữ liệu kiểm tra (\textbf{test}), đồng thời xử lý DataFrame vừa đọc được để nhận biết đâu là tập các đặc trưng (\textbf{X}) và đâu là tập biến mục tiêu (\textbf{y}). Sau đó, ta sẽ chia tập dữ liệu huấn luyện thành hai phần: tập huấn luyện (\textbf{X\_train}, \textbf{y\_train}) và tập kiểm tra (\textbf{X\_test}, \textbf{y\_test}). Do tập mục tiêu là cố định (Salary ứng với \textbf{y\_train} và \textbf{y\_test}), nên ta dùng chung hai tập này cho các câu 1a, 1b, 1c, 1d. 
 
-Sở dĩ phải chuyển về NumPy array với tất cả DataFrame vừa đọc được là vì khi thực hiện yêu cầu tìm đặc trưng tốt nhất trong số các đặc trưng (yêu cầu 1b, 1c), ma trận đặc trưng \textit{X} chỉ có 1 cột, nên khi thực hiện các phép toán trên ma trận, ta cần mở rộng 1 chiều mới 
+Sở dĩ phải chuyển về NumPy array với tất cả DataFrame vừa đọc được là vì khi thực hiện yêu cầu tìm đặc trưng tốt nhất trong số các đặc trưng (yêu cầu 1b, 1c), ma trận đặc trưng \textit{X} chỉ có 1 cột, nên khi thực hiện các phép toán trên ma trận, ta cần mở rộng 1 chiều mới có thể thực hiện phép nhân (phương thức \textit{fit} của lớp OLSLinearRegression). Nếu không mở rộng 1 chiều mới, ta sẽ gặp lỗi khi thực hiện phép nhân.
 
 \subsection{Yêu cầu 1a}
 \subsubsection{Các bước thực hiện}
 \begin{enumerate}
   \item Thực hiện lấy 11 đặc trưng đầu tiên đề bài cung cấp.
   \item Thực hiện chia tập dữ liệu huấn luyện thành hai phần: tập huấn luyện (\textbf{X\_1a\_train}, \textbf{y\_train}) và tập kiểm tra (\textbf{X\_test}, \textbf{y\_test}).
-  \item 
+  \item Huấn luyện mô hình hồi quy tuyến tính với tập huấn luyện (\textbf{X\_1a\_train}, \textbf{y\_train}) thu được tập mục tiêu dự đoán (\textbf{y\_pred\_1a}).
+  \item Gọi hàm \textbf{mae} để tính giá trị lỗi trung bình tuyệt đối (MAE) giữa tập mục tiêu thực tế (\textbf{y\_test}) và tập mục tiêu dự đoán (\textbf{y\_pred\_1a}).
 \end{enumerate}
 \subsubsection{Công thức hồi quy}
+$\text{Salary} = -22756.513 \times \text{Gender} + 804.503 \times \text{10percentage} + 1294.655 \times \text{12percentage} -91781.898 \times \text{CollegeTier} + 23182.389 \times \text{Degree} + 1437.549 \times \text{collegeGPA} -8570.662 \times \text{CollegeCityTier} + 147.858 \times \text{English} + 152.888 \times \text{Logical} + 117.222 \times \text{Quant} + 34552.286 \times \text{Domain}$
+
 \subsubsection{Kết quả mô hình}
+MAE = 104863.77754033195
+
 \subsubsection{Nhận xét}
+Trong một mô hình hồi quy tuyến tính, việc thêm nhiều thuộc tính có thể giúp giảm sai số trung bình tuyệt đối (MAE) bởi vì nó cho phép mô hình nắm bắt được nhiều thông tin hơn về mối quan hệ giữa các biến độc lập và biến phụ thuộc. Tuy nhiên, điều này không phải lúc nào cũng đúng. Việc thêm quá nhiều thuộc tính có thể dẫn đến hiện tượng quá khớp (overfitting), khi đó mô hình sẽ hoạt động tốt trên dữ liệu huấn luyện nhưng không hoạt động tốt trên dữ liệu kiểm tra. Việc này giống như để mô hình ''học tủ'' các quan hệ giữa các biến độc lập và biến phụ thuộc trong dữ liệu huấn luyện, khiến cho mô hình không thể áp dụng được cho các dữ liệu mới. Do đó, cách làm này làm tăng sai số trung bình tuyệt đối (MAE) trên dữ liệu kiểm tra.
 
 \subsection{Yêu cầu 1b}
+\subsubsection{Các bước thực hiện}
+\begin{enumerate}
+  \item Thực hiện lấy 5 đặc trưng tính cách yêu cầu
+  \item Đặt giá trị k (trong k-fold cross validation) là 20.
+  \item Gọi đối tượng thuộc lớp KFold trong thư viện scikit-learn nhằm cung cấp các chỉ mục để chia dữ liệu thành các tập huấn luyện và kiểm tra. 
+  \item Tạo mảng chứa các giá trị MAE ứng với mỗi đặc trưng.
+  \item Lần lượt duyệt qua các đặc trưng, với mỗi đặc trưng, ta thực hiện các bước sau:
+  \begin{enumerate}
+    \item Gọi hàm \textbf{kfold\_cross\_model} \ref{kfoldcrossmodel} với các tham số là mảng đặc trưng tương ứng, tập mục tiêu y\_train\_np, đối tượng KFold, mảng chứa các giá trị MAE.
+    \item Tính giá trị trung bình của các giá trị MAE thu được từ k-fold cross validation.
+    \item Thêm giá trị trung bình của các giá trị MAE thu được vào mảng chứa các giá trị MAE.
+  \end{enumerate}
+  \item Tìm ra đặc trưng tốt nhất bằng cách tìm ra giá trị MAE nhỏ nhất trong mảng chứa các giá trị MAE, ở đây đặc trưng tốt nhất là \textit{nueroticism}.
+  \item Với đặc trưng tốt nhất vừa tìm được, ta thực hiện các bước sau:
+  \begin{enumerate}
+    \item Thêm chiều mới vào cuối mảng đặc trưng bằng cách sử dụng cú pháp [:, None].
+    \item Huấn luyện mô hình hồi quy tuyến tính với tập huấn luyện (\textbf{X\_1b\_best\_train}, \textbf{y\_train\_np}) thu được tập mục tiêu dự đoán (\textbf{y\_pred}). Với \textbf{X\_1b\_best\_train} là mảng đặc trưng tốt nhất vừa tìm được, \textbf{y\_train\_np} là tập mục tiêu huấn luyện. 
+    \item Đánh giá mô hình với tập kiểm tra (\textbf{X\_1b\_best\_test}, \textbf{y\_test}) thu được tập mục tiêu dự đoán (\textbf{y\_pred}).
+    \item Gọi hàm \textbf{mae} để tính giá trị lỗi trung bình tuyệt đối (MAE) giữa tập mục tiêu thực tế (\textbf{y\_test}) và tập mục tiêu dự đoán (\textbf{y\_pred}).
+  \end{enumerate}
+\end{enumerate}
+\subsubsection{Công thức hồi quy}
+$\text{Salary} = -56546.304 \times \text{nueroticism}$
+\subsubsection{Kết quả mô hình}
+\begin{table}[!h]
+  \centering
+  \resizebox{0.5\textwidth}{!}{%
+  \begin{tabular}{|c|l|l|}
+  \hline
+  \multicolumn{1}{|l|}{STT} & Mô hình với 1 đặc trưng & MAE \\ \hline
+  1 & conscientiousness & 306221.75562170806 \\ \hline
+  2 & agreeableness & 300857.53034685535 \\ \hline
+  3 & extraversion & 307059.3991665598 \\ \hline
+  4 & neuroticism & 299376.1964789984 \\ \hline
+  5 & openness\_to\_experience & 303054.52630103764 \\ \hline
+  \end{tabular}%
+  }
+\end{table}
+Kết quả MAE của mô hình với 1 đặc trưng tốt nhất là \textbf{291019.693226953}
+
+\subsubsection{Nhận xét}
+\begin{itemize}
+  \item Các tính cách này là một phần của mô hình Big Five, một khung tham chiếu phổ biến để đánh giá nhân cách của con người. Các tính cách này được đo bằng các điểm số trong bài kiểm tra AMCAT, một cổng việc làm trực tuyến. \cite{kaggleEngineeringGraduate}
+  \item Các tính cách này có thể ảnh hưởng đến mức lương và công việc của các kỹ sư tốt nghiệp ở Ấn Độ. Ví dụ, neuroticism có thể liên quan đến khả năng chịu áp lực và thích nghi với môi trường làm việc. Agreeableness có thể liên quan đến khả năng hợp tác và giao tiếp với đồng nghiệp và khách hàng. Openness\_to\_experience có thể liên quan đến khả năng sáng tạo và học hỏi những điều mới. Conscientiousness có thể liên quan đến khả năng tổ chức và quản lý thời gian. Extraversion có thể liên quan đến khả năng giao tiếp và thuyết phục.
+  \item Để ý rằng MAE của agreeableness và neuroticism không chênh lệch nhau quá nhiều. \\
+  Theo một số nghiên cứu, các đặc trưng tính cách có thể ảnh hưởng đến mức lương và sự thăng tiến trong công việc. Tuy nhiên, mức độ ảnh hưởng của các đặc trưng tính cách có thể khác nhau tùy thuộc vào ngành nghề và công việc cụ thể. \cite{personalityTraitsPredict}
+  Một báo cáo được công bố bởi trang web tìm kiếm việc làm Joblist cho thấy những người có tính cách tự phụ (conscientiousness) có xu hướng kiếm được ít nhất 75.000 đô la Mỹ mỗi năm, trong khi những người có tính cách neuroticism có xu hướng kiếm được 34.999 đô la Mỹ hoặc ít hơn mỗi năm. Tuy nhiên, báo cáo này không đề cập đến mối quan hệ giữa tính cách agreeableness và mức lương. \cite{personalityTraitsPredict2}
+  \item Mức lương của một người có thể phụ thuộc vào nhiều yếu tố khác nhau, chẳng hạn như nghề nghiệp, kinh nghiệm làm việc, nơi làm việc, v.v. Do đó, việc dự đoán mức lương của một người dựa trên một đặc trưng tính cách là không chính xác. Do đó, chỉ sổ MAE của mô hình tốt nhất \textbf{best\_personality\_feature\_model} dù là tốt nhất nhưng vẫn có sai số khá lớn.
+\end{itemize}
+
+\subsubsection{Giả thuyết}
+Để mô hình đặc trưng tính cách đạt kết quả tốt nhất, ta cần chọn đặc trưng tính cách có mối quan hệ tuyến tính với mức lương. Điều này có nghĩa là mức lương tăng khi đặc trưng tính cách tăng và mức lương giảm khi đặc trưng tính cách giảm. Để kiểm tra giả thuyết này, ta sẽ vẽ biểu đồ phân tán giữa mức lương và các đặc trưng tính cách. Nếu biểu đồ phân tán có dạng một đường thẳng, ta có thể kết luận rằng đặc trưng tính cách có mối quan hệ tuyến tính với mức lương. Ngược lại, nếu biểu đồ phân tán không có dạng một đường thẳng, ta có thể kết luận rằng đặc trưng tính cách không có mối quan hệ tuyến tính với mức lương.
+
+Một nghiên cứu được công bố vào năm 2001 trong Tạp chí Hành vi Nghề nghiệp đã khảo sát các chiều tính cách “Big Five”: neuroticism, conscientiousness, extroversion, agreeableness và openness để hiểu mối quan hệ của chúng với kết quả nghề nghiệp. Các nhà nghiên cứu tại Đại học Cleveland State đã khảo sát 496 nhân viên (318 nam và 178 nữ). Kết quả của một phân tích thống kê cho thấy nhân viên hướng ngoại có sự hài lòng lớn hơn với lương, thăng tiến và sự hài lòng về sự nghiệp tổng thể; trong khi những người có điểm cao về neuroticism (ví dụ, tính khí thất thường, lo lắng, lo âu, sợ hãi hoặc bực bội) ít có khả năng hài lòng với sự nghiệp của họ. 
+
+Những người có điểm cao về agreeableness có ít sự hài lòng về sự nghiệp, và điểm cao về openness có mối quan hệ tiêu cực với mức lương. Nhóm nghiên cứu phát hiện ra một mối quan hệ tiêu cực đáng kể giữa agreeableness và mức lương đối với những người trong các nghề nghiệp liên quan đến con người nhưng không có mối quan hệ đối với những người trong các nghề nghiệp không liên quan đến yếu tố ''con người'' mạnh.
+
+Một nghiên cứu thứ hai được công bố trong số tháng 12 năm 2020 của Tạp chí Khoa học Tâm lý cho thấy nếu ta thay đổi tính cách, nó có thể dẫn đến mức độ thành công cao hơn trong công việc. Tiến sĩ Kevin Hoff tại Đại học Houston và nhóm nghiên cứu của ông đã theo dõi hai nhóm thanh niên trong khoảng 12 năm từ 17 tuổi đến khoảng 29 tuổi. Sự phát triển về ổn định cảm xúc, tự phụ và hướng ngoại là các đặc trưng tính cách dự đoán sự hài lòng và thành công trong sự nghiệp.
+
+Những người có mức độ tự phụ và ổn định cảm xúc cao hơn cho thấy sự thành công nhiều hơn trong sự nghiệp tổng thể. Đây là nghiên cứu đầu tiên cho thấy sức mạnh dự đoán của sự thay đổi tính cách cho một loạt các nghề nghiệp trong hơn một thập kỷ. Nói chung, các kết quả cho thấy tính cách có tác động quan trọng đến kết quả sự nghiệp sớm - cả thông qua các mức độ đặc trưng bền vững và cách mà con người thay đổi theo thời gian. Tin tốt là những kết quả này cho thấy các đặc trưng tính cách có thể được điều chỉnh theo thời gian và hỗ trợ khoa học thần kinh rằng não bộ có tính linh hoạt. \cite{forbesScientistsDiscoverSalary}
+
+Tóm lại, nghiên cứu thứ nhất cho thấy những người hướng ngoại có sự hài lòng cao hơn với lương, thăng tiến và sự nghiệp; trong khi những người neuroticism có sự hài lòng thấp hơn. Nghiên cứu thứ hai cho thấy nếu bạn thay đổi tính cách, nó có thể dẫn đến mức độ thành công cao hơn trong công việc. Và để mô hình có 
 
 \subsection{Yêu cầu 1c}
+\begin{enumerate}
+  \item Thực hiện lấy 3 đặc trưng tính cách yêu cầu
+  \item Đặt giá trị k (trong k-fold cross validation) là 20.
+  \item Gọi đối tượng thuộc lớp KFold trong thư viện scikit-learn nhằm cung cấp các chỉ mục để chia dữ liệu thành các tập huấn luyện và kiểm tra. 
+  \item Tạo mảng chứa các giá trị MAE ứng với mỗi đặc trưng.
+  \item Lần lượt duyệt qua các đặc trưng, với mỗi đặc trưng, ta thực hiện các bước sau:
+  \begin{enumerate}
+    \item Gọi hàm \textbf{kfold\_cross\_model} \ref{kfoldcrossmodel} với các tham số là mảng đặc trưng tương ứng, tập mục tiêu y\_train\_np, đối tượng KFold, mảng chứa các giá trị MAE.
+    \item Tính giá trị trung bình của các giá trị MAE thu được từ k-fold cross validation.
+    \item Thêm giá trị trung bình của các giá trị MAE thu được vào mảng chứa các giá trị MAE.
+  \end{enumerate}
+  \item Tìm ra đặc trưng tốt nhất bằng cách tìm ra giá trị MAE nhỏ nhất trong mảng chứa các giá trị MAE, ở đây đặc trưng tốt nhất là \textit{Quant}.
+  \item Với đặc trưng tốt nhất vừa tìm được, ta thực hiện các bước sau:
+  \begin{enumerate}
+    \item Thêm chiều mới vào cuối mảng đặc trưng bằng cách sử dụng cú pháp [:, None].
+    \item Huấn luyện mô hình hồi quy tuyến tính với tập huấn luyện (\textbf{X\_1c\_best\_train}, \textbf{y\_train\_np}) thu được tập mục tiêu dự đoán (\textbf{y\_pred}). Với \textbf{X\_1c\_best\_train} là mảng đặc trưng tốt nhất vừa tìm được, \textbf{y\_train\_np} là tập mục tiêu huấn luyện.
+    \item Đánh giá mô hình với tập kiểm tra (\textbf{X\_1c\_best\_test}, \textbf{y\_test}) thu được tập mục tiêu dự đoán (\textbf{y\_pred}).
+    \item Gọi hàm \textbf{mae} để tính giá trị lỗi trung bình tuyệt đối (MAE) giữa tập mục tiêu thực tế (\textbf{y\_test}) và tập mục tiêu dự đoán (\textbf{y\_pred}).
+  \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Công thức hồi quy}
+$\text{Salary} = 585.895 \times \text{Quant}$
+\subsubsection{Kết quả mô hình}
+\begin{table}[!h]
+  \centering
+  \resizebox{0.5\textwidth}{!}{%
+  \begin{tabular}{|c|l|l|}
+  \hline
+  \multicolumn{1}{|l|}{STT} & Mô hình với 1 đặc trưng & MAE \\ \hline
+  1 & English & 121901.64167007094 \\ \hline
+  2 & Logical & 120304.93112741373 \\ \hline
+  3 & Quant & 118126.44763193061 \\ \hline
+  \end{tabular}%
+  }
+\end{table}
+Kết quả MAE của mô hình với 1 đặc trưng tốt nhất là \textbf{106819.5776198967}
+
+\subsubsection{Nhận xét}
+\begin{itemize}
+  \item Các kỹ năng này là một phần của bài kiểm tra AMCAT, một cổng việc làm trực tuyến. \cite{kaggleEngineeringGraduate}
+  \item Các kỹ năng này có thể ảnh hưởng đến mức lương và công việc của các kỹ sư tốt nghiệp ở Ấn Độ. Chẳng hạn, Logical có thể liên quan đến khả năng giải quyết vấn đề, Quant có thể liên quan đến khả năng tính toán, English có thể liên quan đến khả năng giao tiếp. 3 kỹ năng Tiếng Anh, Lý luận, Số học là một số phần trong bài kiểm tra AMCAT đo khả năng sử dụng ngôn ngữ, lý luận logic và khả năng số học của ứng viên. Những kỹ năng này quan trọng cho kỹ sư để giao tiếp hiệu quả, giải quyết vấn đề và phân tích dữ liệu. 
+  \item Với công việc kỹ sư, kỹ năng 
+
+\end{itemize}
+  
+\subsubsection{Giả thuyết}
 
 \subsection{Yêu cầu 1d}
 
