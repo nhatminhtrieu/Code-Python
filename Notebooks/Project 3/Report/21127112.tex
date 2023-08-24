@@ -590,11 +590,14 @@ Còn kỹ năng Logical không ảnh hưởng đến mức lương bằng Quant 
 
   Đối với bài kiểm tra AMCAT, ba phần kỹ năng chính và tất cả sinh viên dự thi đều tham gia (tất cả giá trị khác -1), ta nhân điểm của từng bài thi thành phần cho 2 vừa để tăng độ quan trọng của bài thi thành phần. Với các điểm số các phần kiểm tra tiếp theo, có thể có sinh viên không tham gia và đặt giá trị -1, ta quy đổi về 0 để không ảnh hưởng đến tổng điểm. Và cuối cùng nhân tổng điểm tính được với điểm số Domain.
   
-  Đối với các đặc trưng tính cách, ta thực hiện bình phương để tạo ra sự khác biệt rõ ràng hơn cũng như loại bỏ các giá trị âm. Và cuối cùng cộng tổng điểm tính được với điểm số của các đặc trưng tính cách.
+  Đối với các đặc trưng tính cách, ta thực hiện tổng bình phương để tạo ra sự khác biệt rõ ràng hơn cũng như loại bỏ các giá trị âm.
 
   \subsubsection{Các bước thực hiện}
   \begin{enumerate}
-    \item 
+    \item Tiền xử lý các dữ liệu (X\_grading\_train, X\_ELQ\_train, X\_GPA\_train). 
+    \item Ghép các mảng đã tiền xử lý thành mảng X\_All\_features bằng hàm \text{numpy.hstack}, hàm này sẽ ghép các mảng theo chiều ngang và tạo mảng chứa các giá trị MAE khi thực hiện k-fold cross validation.
+    \item Gọi hàm \textit{kfold\_cross\_model} \ref{kfoldcrossmodel} với các tham số là mảng đặc trưng tương ứng, tập mục tiêu y\_train\_np, đối tượng KFold, mảng chứa các giá trị MAE. Với mỗi giá trị MAE thu được từ 1 fold, thêm vào mảng chứa các giá trị MAE.
+    \item Tính giá trị trung bình của các giá trị MAE thu được từ k-fold cross validation.
   \end{enumerate}
 
 \end{itemize}
@@ -612,9 +615,20 @@ Còn kỹ năng Logical không ảnh hưởng đến mức lương bằng Quant 
   \end{tabular}%
   }
 \end{table}
-\subsubsection{Nhận xét mô hình tốt nhất}
 
-\subsubsection{Giả thuyết mô hình tốt nhất}
+Kết quả MAE của mô hình độ tương quan thấp nhất trên tập test: 102190.45299469784
+
+\subsubsection{Nhận xét}
+\begin{itemize}
+  \item Mô hình 1 sử dụng 7 đặc trưng (ComputerProgramming, ElectronicsAndSemicon, ComputerScience, MechanicalEngg, ElectricalEngg, TelecomEngg, CivilEngg) có MAE cao nhất là 135972.48928102275. Điều này cho thấy các đặc trưng này không thể giải thích sự biến động trong lương của sinh viên tốt nghiệp kỹ thuật. Có thể là do các đặc trưng này không liên quan đến mức lương của sinh viên tốt nghiệp kỹ thuật. Điều này có thể dẫn đến việc mô hình dự đoán lương sử dụng các đặc trưng này có thể có độ chính xác thấp hơn so với mô hình sử dụng các đặc trưng khác.
+  \item Mô hình 2 với 21 đặc trưng ít tương quan nhất (Least correlated features), loại bỏ những đặc trưng có tương quan > 0.6 có MAE thấp nhất là 110608.51614315098. Dựa trên nghiên cứu về độ tương quan, mô hình này cho thấy các đặc trưng này có thể giải thích sự biến động trong lương của sinh viên tốt nghiệp kỹ thuật tốt hơn so với các đặc trưng ở mô hình 1. Và mô hình này trên thực tế là mô hình tốt nhất trong 3 mô hình.
+  \item Mô hình 3 sử dụng 22 đặc trưng (tất cả trừ College City Tier, có thay đổi về điểm số đánh giá và điểm bài kiểm tra AMCAT) có MAE là 115699.55196244389. Điều này cho thấy các đặc trưng này có thể giải thích sự biến động trong lương của sinh viên tốt nghiệp kỹ thuật tốt hơn so với các đặc trưng ở mô hình 1. Và mô hình này trên thực tế là mô hình tốt nhất trong 3 mô hình.
+  \item Mô hình 3 dù có MAE song có thể bị hiện tượng overfitting dẫn đến sai số lớn khi đưa mô hình vào tập test. Vì vậy, mô hình 2 là mô hình tốt nhất trong 3 mô hình.
+\end{itemize}
+\subsubsection{Giả thuyết}
+Mô hình 2 được xây dựng dựa trên độ tương quan thấp nhất giữa các đặc trưng. Song, độ tương quan tối đa max\{corr\} = 0.64, còn các giá trị còn lại nằm trong khoảng 0.00019 đến 0.5, nghĩa là các đặc trưng ít có mối quan hệ với nhau. Mô hình đặc trưng ít tương quan nhất có thể đạt kết quả tốt nhất khi các đặc trưng trong mô hình có mối liên hệ thấp với nhau và không gây ra hiện tượng đa cộng tuyến. Điều này có nghĩa là các đặc trưng trong mô hình không phụ thuộc lẫn nhau và có thể cung cấp thông tin độc lập cho mô hình để dự đoán kết quả. Khi các đặc trưng trong mô hình có mối liên hệ cao với nhau, chúng có thể gây ra hiện tượng đa cộng tuyến, khiến cho mô hình khó khăn trong việc xác định được sự ảnh hưởng của từng đặc trưng riêng biệt đối với kết quả dự đoán. Do đó, việc sử dụng các đặc trưng ít tương quan nhất có thể giúp cải thiện hiệu suất của mô hình. Tuy nhiên, điều này cũng phụ thuộc vào bộ dữ liệu và bài toán cụ thể. 
+
+Hiện tượng đa cộng tuyến (Multicollinearity) là hiện tượng trong phân tích thống kê khi hai hoặc nhiều biến độc lập trong một mô hình tuyến tính có mối quan hệ tuyến tính mạnh với nhau. Điều này dẫn đến việc giảm độ chính xác của mô hình và làm tăng sai số trong dự đoán, cũng như làm giảm khả năng kiểm định sự ảnh hưởng của từng biến độc lập đối với biến phụ thuộc. Đa cộng tuyến không làm giảm sức mạnh dự đoán hoặc độ tin cậy của mô hình nói chung, ít nhất là trong tập dữ liệu mẫu; nó chỉ ảnh hưởng đến các tính toán liên quan đến các yếu tố dự đoán riêng lẻ. Nghĩa là, một mô hình hồi quy đa biến với các yếu tố dự đoán cộng tuyến có thể cho biết toàn bộ nhóm các yếu tố dự báo dự đoán biến kết quả tốt như thế nào, nhưng nó có thể không đưa ra kết quả hợp lệ về bất kỳ dự đoán riêng lẻ nào hoặc về những yếu tố dự đoán nào là dư thừa so với những người khác. \cite{multicollinearity}
 
 \newpage
 \printbibliography[heading=mybibintoc]
