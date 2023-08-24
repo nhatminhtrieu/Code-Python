@@ -398,6 +398,8 @@ Trước khi thực hiện tìm mô hình hồi quy tuyến tính cho tất cả
 
 Sở dĩ phải chuyển về NumPy array với tất cả DataFrame vừa đọc được là vì khi thực hiện yêu cầu tìm đặc trưng tốt nhất trong số các đặc trưng (yêu cầu 1b, 1c), ma trận đặc trưng \textit{X} chỉ có 1 cột, nên khi thực hiện các phép toán trên ma trận, ta cần mở rộng 1 chiều mới có thể thực hiện phép nhân (phương thức \textit{fit} của lớp OLSLinearRegression). Nếu không mở rộng 1 chiều mới, ta sẽ gặp lỗi khi thực hiện phép nhân.
 
+Do đồ án yêu cầu khi sử dụng cross-validation, ta chỉ được phép xáo trộn dữ liệu 1 lần duy nhất và thực hiện trên \textit{m} mô hình \cite{hcmusLearningManagement}, ta sẽ gọi lại đối tượng KFold đã được khởi tạo trước đó để sử dụng lại các chỉ số đã được tạo ra. Điều này giúp đảm bảo rằng các chỉ số được tạo ra sẽ giống nhau trong mỗi lần chạy, từ đó đảm bảo tính nhất quán của kết quả.
+
 \subsection{Yêu cầu 1a}
 \subsubsection{Các bước thực hiện}
 \begin{enumerate}
@@ -467,8 +469,6 @@ Kết quả MAE của mô hình với 1 đặc trưng tốt nhất là \textbf{2
 \end{itemize}
 
 \subsubsection{Giả thuyết}
-Để mô hình đặc trưng tính cách đạt kết quả tốt nhất, ta cần chọn đặc trưng tính cách có mối quan hệ tuyến tính với mức lương. Điều này có nghĩa là mức lương tăng khi đặc trưng tính cách tăng và mức lương giảm khi đặc trưng tính cách giảm. Để kiểm tra giả thuyết này, ta sẽ vẽ biểu đồ phân tán giữa mức lương và các đặc trưng tính cách. Nếu biểu đồ phân tán có dạng một đường thẳng, ta có thể kết luận rằng đặc trưng tính cách có mối quan hệ tuyến tính với mức lương. Ngược lại, nếu biểu đồ phân tán không có dạng một đường thẳng, ta có thể kết luận rằng đặc trưng tính cách không có mối quan hệ tuyến tính với mức lương.
-
 Một nghiên cứu được công bố vào năm 2001 trong Tạp chí Hành vi Nghề nghiệp đã khảo sát các chiều tính cách “Big Five”: neuroticism, conscientiousness, extroversion, agreeableness và openness để hiểu mối quan hệ của chúng với kết quả nghề nghiệp. Các nhà nghiên cứu tại Đại học Cleveland State đã khảo sát 496 nhân viên (318 nam và 178 nữ). Kết quả của một phân tích thống kê cho thấy nhân viên hướng ngoại có sự hài lòng lớn hơn với lương, thăng tiến và sự hài lòng về sự nghiệp tổng thể; trong khi những người có điểm cao về neuroticism (ví dụ, tính khí thất thường, lo lắng, lo âu, sợ hãi hoặc bực bội) ít có khả năng hài lòng với sự nghiệp của họ. 
 
 Những người có điểm cao về agreeableness có ít sự hài lòng về sự nghiệp, và điểm cao về openness có mối quan hệ tiêu cực với mức lương. Nhóm nghiên cứu phát hiện ra một mối quan hệ tiêu cực đáng kể giữa agreeableness và mức lương đối với những người trong các nghề nghiệp liên quan đến con người nhưng không có mối quan hệ đối với những người trong các nghề nghiệp không liên quan đến yếu tố ''con người'' mạnh.
@@ -477,9 +477,10 @@ Một nghiên cứu thứ hai được công bố trong số tháng 12 năm 2020
 
 Những người có mức độ tự phụ và ổn định cảm xúc cao hơn cho thấy sự thành công nhiều hơn trong sự nghiệp tổng thể. Đây là nghiên cứu đầu tiên cho thấy sức mạnh dự đoán của sự thay đổi tính cách cho một loạt các nghề nghiệp trong hơn một thập kỷ. Nói chung, các kết quả cho thấy tính cách có tác động quan trọng đến kết quả sự nghiệp sớm - cả thông qua các mức độ đặc trưng bền vững và cách mà con người thay đổi theo thời gian. Tin tốt là những kết quả này cho thấy các đặc trưng tính cách có thể được điều chỉnh theo thời gian và hỗ trợ khoa học thần kinh rằng não bộ có tính linh hoạt. \cite{forbesScientistsDiscoverSalary}
 
-Tóm lại, nghiên cứu thứ nhất cho thấy những người hướng ngoại có sự hài lòng cao hơn với lương, thăng tiến và sự nghiệp; trong khi những người neuroticism có sự hài lòng thấp hơn. Nghiên cứu thứ hai cho thấy nếu bạn thay đổi tính cách, nó có thể dẫn đến mức độ thành công cao hơn trong công việc. Và để mô hình có 
+Tóm lại, neuroticism đạt kết quả tốt nhất vì nó có mối quan hệ tiêu cực với mức lương. Các đặc trưng tính cách khác có thể ảnh hưởng đến mức lương và sự thăng tiến trong công việc, nhưng mức độ ảnh hưởng này có thể khác nhau tùy thuộc vào ngành nghề và công việc cụ thể.
 
 \subsection{Yêu cầu 1c}
+\subsubsection{Các bước thực hiện}
 \begin{enumerate}
   \item Thực hiện lấy 3 đặc trưng tính cách yêu cầu
   \item Đặt giá trị k (trong k-fold cross validation) là 20.
@@ -522,13 +523,98 @@ Kết quả MAE của mô hình với 1 đặc trưng tốt nhất là \textbf{1
 \begin{itemize}
   \item Các kỹ năng này là một phần của bài kiểm tra AMCAT, một cổng việc làm trực tuyến. \cite{kaggleEngineeringGraduate}
   \item Các kỹ năng này có thể ảnh hưởng đến mức lương và công việc của các kỹ sư tốt nghiệp ở Ấn Độ. Chẳng hạn, Logical có thể liên quan đến khả năng giải quyết vấn đề, Quant có thể liên quan đến khả năng tính toán, English có thể liên quan đến khả năng giao tiếp. 3 kỹ năng Tiếng Anh, Lý luận, Số học là một số phần trong bài kiểm tra AMCAT đo khả năng sử dụng ngôn ngữ, lý luận logic và khả năng số học của ứng viên. Những kỹ năng này quan trọng cho kỹ sư để giao tiếp hiệu quả, giải quyết vấn đề và phân tích dữ liệu. 
-  \item Với công việc kỹ sư, kỹ năng 
-
+  \item Mô hình dự đoán lương của sinh viên tốt nghiệp kỹ thuật với đặc trưng Quant có MAE tốt nhất so với các đặc trưng English và Logical, với MAE lần lượt là 121901.64167007094 và 120304.93112741373. Điều này cho thấy đặc trưng Quant có thể giải thích sự biến động trong lương của sinh viên tốt nghiệp kỹ thuật tốt hơn so với các đặc trưng English và Logical. Điều này cho thấy khả năng giải quyết định lượng (Quant) có thể có mối liên hệ mật thiết với mức lương của sinh viên tốt nghiệp kỹ thuật, trong khi khả năng giao tiếp bằng tiếng Anh (English) và khả năng suy luận logic (Logical) có thể không quan trọng bằng. Tuy nhiên, điều này chỉ là một giả thuyết và cần được kiểm chứng thêm bằng cách sử dụng dữ liệu và phân tích thêm.
+  \item Ba giá trị MAE không chênh lệch nhiều cho thấy mỗi đặc trưng đều có một mức độ ảnh hưởng nhất định đến mức lương của sinh viên tốt nghiệp kỹ thuật. Điều này có thể cho thấy rằng cả ba kỹ năng đều quan trọng trong ngành kỹ sư và có thể cần được phát triển để đạt được thành công trong sự nghiệp.
 \end{itemize}
   
 \subsubsection{Giả thuyết}
+Một giả thuyết có thể là bài kiểm tra định lượng (Quantitative Ability Test) có mối liên hệ mật thiết với khả năng thành công trong một số ngành kỹ thuật. Điều này có thể dẫn đến việc một mô hình dự đoán lương sử dụng kết quả bài kiểm tra định lượng làm đặc trưng có thể có độ chính xác cao hơn, được thể hiện qua giá trị MAE thấp hơn.
+
+Hai kỹ năng còn lại là English và Logical cũng quan trọng không kém. Trong ngành kỹ sư, khả năng giải quyết vấn đề định lượng có mối liên hệ mật thiết hơn với mức lương so với khả năng giao tiếp bằng tiếng Anh. Điều này có thể dẫn đến việc một mô hình dự đoán lương sử dụng kết quả bài kiểm tra định lượng làm đặc trưng có thể có độ chính xác cao hơn so với một mô hình sử dụng khả năng giao tiếp bằng tiếng Anh làm đặc trưng.
+
+Ví dụ, trong các ngành kỹ thuật liên quan đến toán học và khoa học máy tính, khả năng giải quyết vấn đề định lượng rất quan trọng để đánh giá khả năng của một ứng viên. Do đó, một ứng viên có kết quả cao trong bài kiểm tra định lượng có thể được xem là tốt hơn trong ngành kỹ thuật này và do đó có thể được trả lương cao hơn. Trong khi đó, khả năng giao tiếp bằng tiếng Anh có thể không được coi là yếu tố then chốt để đánh giá khả năng thành công của một ứng viên trong các ngành kỹ thuật này.
+
+Còn kỹ năng Logical không ảnh hưởng đến mức lương bằng Quant là vì trong một số ngành kỹ thuật, khả năng giải quyết vấn đề định lượng có thể được coi là một yếu tố quan trọng để đánh giá khả năng thành công của một ứng viên. Nói cách khác, với bộ dữ liệu nhận được, khả năng giải quyết vấn đề định lượng có thể có mối liên hệ mật thiết hơn với mức lương của sinh viên tốt nghiệp kỹ thuật so với khả năng suy luận logic. Một số nhóm ngành kỹ thuật có thể khiến cho Quant tốt hơn Logical là kỹ sư phần mềm, kỹ sư điện, kỹ sư cơ khí, kỹ sư hóa học, kỹ sư môi trường \dots
 
 \subsection{Yêu cầu 1d}
+\begin{itemize}
+  \item \textbf{Mô hình 1 (AMCAT)}
+  \subsubsection{Ý tưởng}
+  AMCAT là một bài kiểm tra trực tuyến được sử dụng để đánh giá các kỹ năng cơ bản của một ứng viên. Bài kiểm tra này được sử dụng rộng rãi trong các công ty Ấn Độ để đánh giá các ứng viên cho các vị trí kỹ thuật. Bài kiểm tra này đo các kỹ năng cơ bản của ứng viên, chẳng hạn như kỹ năng giao tiếp bằng tiếng Anh, khả năng giải quyết vấn đề định lượng, khả năng suy luận logic, v.v. \cite{kaggleEngineeringGraduate}.
+
+  AMCAT quan trọng vì nó mang lại một bài kiểm tra năng lực công bằng, tiêu chuẩn và điểm số dễ so sánh để lọc ra danh sách các ứng viên có hiệu suất tốt nhất. Điều này tiết kiệm thời gian cho cả ứng viên và công ty và giúp ứng viên tìm thấy công việc phù hợp nhất cho họ trên khắp đất nước. AMCAT được hơn 1000 công ty sử dụng và được đăng ký dự thi bởi hơn 2 triệu sinh viên \cite{getmyuniAMCATUseful}.
+
+  Vì vậy, mô hình dự đoán lương của sinh viên tốt nghiệp kỹ thuật sử dụng kết quả bài kiểm tra AMCAT có thể là một mô hình đáng tin cậy để thử nghiệm. Ta bỏ qua các đặc trưng tính cách do các đặc trưng tính cách đã được lựa chọn ở yêu cầu 1b.
+  \subsubsection{Các bước thực hiện}
+  \begin{enumerate}
+    \item Các đặc trưng có liên quan đến AMCAT được sử dụng trong mô hình là: ComputerProgramming, ElectronicsAndSemicon, ComputerScience, MechanicalEngg, ElectricalEngg, TelecomEngg, CivilEngg. Ta sẽ lấy các đặc trưng này từ tập dữ liệu huấn luyện (\textbf{X\_AMCAT\_train}) và mảng chứa các giá trị MAE.
+    \item Gọi hàm \textit{kfold\_cross\_model} \ref{kfoldcrossmodel} với các tham số là mảng đặc trưng tương ứng, tập mục tiêu y\_train\_np, đối tượng KFold, mảng chứa các giá trị MAE. Với mỗi giá trị MAE thu được từ 1 fold, thêm vào mảng chứa các giá trị MAE.
+    \item Tính giá trị trung bình của các giá trị MAE thu được từ k-fold cross validation.
+  \end{enumerate}
+  \item \textbf{Mô hình 2}
+  \subsubsection{Ý tưởng}
+  Độ tương quan là một phương pháp thống kê được sử dụng để đo lường mối quan hệ giữa hai hoặc nhiều biến. Nó có thể giúp ta xác định các biến có mối liên hệ mạnh với biến phụ thuộc và do đó có thể được sử dụng làm đặc trưng cho mô hình dự đoán. Điều này có thể giúp cải thiện hiệu suất của mô hình và giúp ta đưa ra dự đoán chính xác hơn.
+
+  Một trong những lợi ích của việc sử dụng độ tương quan để xây dựng mô hình là nó cung cấp một bản tóm tắt ngắn gọn và rõ ràng về mối quan hệ giữa các biến. Điều này có thể giúp ta hiểu rõ hơn về dữ liệu và xây dựng các mô hình chính xác hơn. Ngoài ra, việc sử dụng độ tương quan cũng có thể giúp ta loại bỏ các biến không liên quan hoặc không cần thiết, giúp tối ưu hóa hiệu suất của mô hình.
+  
+  Tuy nhiên, độ tương quan không phải là phương pháp duy nhất để xây dựng mô hình và có thể không phù hợp trong mọi trường hợp. Các phương pháp khác như lựa chọn đặc trưng, phân tích thành phần chính và lựa chọn mô hình cũng có thể được sử dụng để xây dựng các mô hình chính xác. Việc lựa chọn phương pháp phù hợp sẽ phụ thuộc vào nhiều yếu tố khác nhau, bao gồm loại dữ liệu, số lượng biến và yêu cầu của bài toán \cite{hbrCorrelationMake} \cite{stackexchangeCorrelationNeeded}.
+
+  Trong khoa học dữ liệu, độ tương quan càng lớn có thể cho thấy sự quá khớp (overfitting) của mô hình huấn luyện, dẫn đến khi đưa mô hình vào tập kiểm tra sẽ có sai số lớn. Với cách tạo heatmap đã được trình bày, ta nhận thấy max\{corr\} = 0.64. Và ta sẽ tiến hành loại bỏ những đặc trưng có độ tương quan > 0.6 để xây dựng mô hình. 
+
+  Trong bài toán này, ta sẽ sử dụng độ tương quan để xây dựng mô hình dự đoán lương của sinh viên tốt nghiệp kỹ thuật. Ta sẽ lựa chọn các đặc trưng có độ tương quan thấp nhất với nhau để xây dựng mô hình. Ta sẽ sử dụng hàm \textbf{corr} trong thư viện pandas để tính độ tương quan giữa các đặc trưng. Ta sẽ lựa chọn các đặc trưng có độ tương quan thấp nhất với nhau để xây dựng mô hình.
+  \subsubsection{Các bước thực hiện}
+  \begin{enumerate}
+    \item Tạo ma trận tương quan: \textit{corr\_matrix} bằng cách sử dụng phương thức corr() của X\_train để tính toán ma trận tương quan giữa các cột của X\_train. Phương thức abs() được sử dụng để lấy giá trị tuyệt đối của các hệ số tương quan và vẽ heatmap.
+    \item Lấy ma trận tam giác trên với các giá trị 1 ở trên đường chéo chính và các giá trị 0 ở dưới đường chéo chính. Phương thức astype(bool) sau đó được sử dụng để chuyển đổi các giá trị 1 thành True và các giá trị 0 thành False. 
+    
+    Kết quả là một mảng bool với các giá trị True ở trên đường chéo chính và các giá trị False ở dưới. Mảng bool này sau đó được sử dụng như là tham số cho phương thức where() của \textit{corr\_matrix}. Phương thức where() lọc ra các giá trị của DataFrame tại các vị trí mà mảng bool có giá trị True và đặt các giá trị còn lại thành NaN. Kết quả là DataFrame upper chỉ chứa các giá trị của tam giác trên của ma trận tương quan.
+    \item Chọn các đặc trưng có độ tương quan lớn hơn 0.6 sử dụng list comprehension để lặp qua các cột của DataFrame upper và chọn ra các cột có bất kỳ giá trị nào lớn hơn 0.6. Các cột này được lưu vào danh sách to\_drop.
+    \item Gọi hàm \textit{kfold\_cross\_model} \ref{kfoldcrossmodel} với các tham số là mảng đặc trưng tương ứng, tập mục tiêu y\_train\_np, đối tượng KFold, mảng chứa các giá trị MAE. Với mỗi giá trị MAE thu được từ 1 fold, thêm vào mảng chứa các giá trị MAE.
+    \item Tính giá trị trung bình của các giá trị MAE thu được từ k-fold cross validation.
+  \end{enumerate}
+  \item \textbf{Mô hình 3}
+  \subsubsection{Ý tưởng}
+  Một ý tưởng để huấn luyện mô hình là sử dụng toàn bộ các cột có sẵn trong dữ liệu huấn luyện. Lợi ích của việc sử dụng toàn bộ các cột để huấn luyện mô hình là nó đơn giản và nhanh chóng. Việc sử dụng toàn bộ các cột có thể giúp mô hình học được những mối quan hệ phức tạp giữa các đặc trưng và biến mục tiêu.
+
+  Tuy nhiên, việc này cũng có thể có những hạn chế. Một số đặc trưng có thể không liên quan hoặc không cần thiết cho việc dự đoán biến mục tiêu, và việc sử dụng chúng có thể làm giảm hiệu suất của mô hình. Ngoài ra, việc sử dụng nhiều đặc trưng có thể làm tăng độ phức tạp của mô hình và khiến nó khó hiểu và khó diễn giải hơn.
+
+  Đồng thời, ta sẽ không thể loại bỏ những đặc trưng không liên quan/ không cần thiết cho việc dự đoán biến mục tiêu. Dẫn đến có thể làm cho mô hình được huấn luyện không tối ưu.
+
+  Ở mô hình 3, ta sẽ loại bỏ đặc trưng CollegeCityTier và xử lý các giá trị thiếu của các đặc trưng còn lại như sau:
+  \begin{itemize}
+    \item $\text{Grading} = 5\%  \text{10percentage} + 10\% \text{12percentage} + 85\% (\text{collegeGPA} \times \text{CollegeTier}^{2} \times \text{Degree}^2)$
+    \item $\text{AMCAT Point} = 2 (\text{English} + \text{Logical} + \text{Quant}) \\ + \text{Domain}(\text{ComputerProgramming} + \text{ElectronicsAndSemicon} + \text{ComputerScience} \\ + \text{MechanicalEngg} + \text{ElectricalEngg} + \text{TelecomEngg} + \text{CivilEngg}) + \\ {(\text{conscientiousness} + \text{agreeableness} + \text{extraversion} + \text{nueroticism} + \text{openess\_to\_experience})}^2$
+  \end{itemize}
+
+  Các tham số được truyền vào với nhiều nguyên nhân. Đầu tiên, điểm số lớp 10 và lớp 12 không ảnh hưởng quá nhiều đến mức lương khi thực tế rằng rất nhiều sinh viên chưa có định hướng và đầu tư cho tương lai nghề nghiệp từ những năm trung học phổ thông. Do đó điểm lớp 10 chiếm 5\% và điểm lớp 12 chiếm 10\% trong tổng điểm. Điểm số của sinh viên trong trường đại học được tính bằng công thức có thêm hệ số CollegeTier và Degree. Cấp độ của trường đại học có thể ảnh hưởng đến mức lương của sinh viên tốt nghiệp kỹ thuật. Điều này có thể là do các trường đại học hàng đầu có chất lượng giảng dạy tốt hơn và có thể đào tạo ra những kỹ sư tốt hơn và do chúng chỉ có giá trị 1 hoặc 2 nên ta bình phương để tạo ra sự khác biệt rõ ràng hơn. Degree cũng có thể ảnh hưởng đến mức lương của sinh viên tốt nghiệp kỹ thuật. Ứng viên có bằng thạc sĩ hoặc tiến sĩ có thể được trả lương cao hơn so với ứng viên có bằng cử nhân. Do đó, ta cũng thực hiện bình phương.
+
+  Đối với bài kiểm tra AMCAT, ba phần kỹ năng chính và tất cả sinh viên dự thi đều tham gia (tất cả giá trị khác -1), ta nhân điểm của từng bài thi thành phần cho 2 vừa để tăng độ quan trọng của bài thi thành phần. Với các điểm số các phần kiểm tra tiếp theo, có thể có sinh viên không tham gia và đặt giá trị -1, ta quy đổi về 0 để không ảnh hưởng đến tổng điểm. Và cuối cùng nhân tổng điểm tính được với điểm số Domain.
+  
+  Đối với các đặc trưng tính cách, ta thực hiện bình phương để tạo ra sự khác biệt rõ ràng hơn cũng như loại bỏ các giá trị âm. Và cuối cùng cộng tổng điểm tính được với điểm số của các đặc trưng tính cách.
+
+  \subsubsection{Các bước thực hiện}
+  \begin{enumerate}
+    \item 
+  \end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Kết quả mô hình}
+\begin{table}[!h]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{|c|l|l|}
+  \hline
+  \multicolumn{1}{|l|}{STT} & Mô hình tìm được & MAE \\ \hline
+  1 & Sử dụng 7 đặc trưng (ComputerProgramming, ElectronicsAndSemicon, ComputerScience, MechanicalEngg, ElectricalEngg, TelecomEngg, CivilEngg) & 135972.48928102275 \\ \hline
+  2 & Sử dụng 21 đặc trưng ít tương quan nhất (Least correlated features), loại bỏ những đặc trưng có tương quan > 0.6 & 110608.51614315098 \\ \hline
+  3 & Sử dụng 22 đặc trưng (tất cả trừ College City Tier, có thay đổi về điểm số đánh giá và điểm bài kiểm tra AMCAT) & 115699.55196244389 \\ \hline
+  \end{tabular}%
+  }
+\end{table}
+\subsubsection{Nhận xét mô hình tốt nhất}
+
+\subsubsection{Giả thuyết mô hình tốt nhất}
 
 \newpage
 \printbibliography[heading=mybibintoc]
